@@ -1,0 +1,69 @@
+--- a/breakout_bot/core/scanning_manager.py
++++ b/breakout_bot/core/scanning_manager.py
+@@ -125,6 +125,9 @@ class ScanningManager:
+             scan_results: List[ScanResult] = []
+             
+             for symbol in self.active_symbols:
++                # Generate correlation_id for tracing
++                correlation_id = f"{symbol}:{int(time.time())}"
++                
+                 try:
+                     # Fetch market data
+                     market_data = await self._fetch_market_data(symbol)
+@@ -142,7 +145,8 @@ class ScanningManager:
+                         filters_passed=result.filters_passed,
+                         score=result.score,
+                         score_components=result.score_components,
+-                        timestamp=int(time.time())
++                        timestamp=int(time.time()),
++                        correlation_id=correlation_id  # Add correlation_id
+                     )
+                     
+                     scan_results.append(scan_result)
+
+--- a/breakout_bot/core/signal_manager.py
++++ b/breakout_bot/core/signal_manager.py
+@@ -89,6 +89,9 @@ class SignalManager:
+                 if scan_result.symbol not in self.watched_symbols:
+                     continue
+                 
++                # Propagate correlation_id
++                correlation_id = getattr(scan_result, 'correlation_id', f"{scan_result.symbol}:{int(time.time())}")
++                
+                 try:
+                     # Fetch updated market data
+                     market_data = await self._fetch_market_data(scan_result.symbol)
+@@ -112,7 +115,8 @@ class SignalManager:
+                             signal = self._create_signal_from_validation(
+                                 scan_result.symbol,
+                                 signal_type,
+-                                conditions
++                                conditions,
++                                correlation_id=correlation_id  # Propagate
+                             )
+                             
+                             if signal:
+
+--- a/breakout_bot/diagnostics/collector.py
++++ b/breakout_bot/diagnostics/collector.py
+@@ -45,6 +45,7 @@ class DiagnosticsCollector:
+         symbol: str,
+         condition: str,
+         value: Any,
+         threshold: Any,
+         passed: bool,
+         candle_ts: Optional[int] = None,
++        correlation_id: Optional[str] = None,  # Add correlation_id
+         extra: Optional[Dict[str, Any]] = None,
+     ) -> None:
+         """Record a signal condition check."""
+@@ -59,7 +60,8 @@ class DiagnosticsCollector:
+             "passed": passed,
+             "candle_ts": candle_ts,
+             "extra": extra or {},
+-            "timestamp": time.time()
++            "timestamp": time.time(),
++            "correlation_id": correlation_id  # Store for tracing
+         }
+         
+         self.signal_conditions.append(record)

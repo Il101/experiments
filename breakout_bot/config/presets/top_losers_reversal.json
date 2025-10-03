@@ -1,0 +1,83 @@
+{
+  "name": "top_losers_reversal",
+  "description": "Reversal opportunities in oversold top losers with retest strategy",
+  "target_markets": "Top 24h losers with potential reversal setups",
+  "strategy_priority": "retest",
+  "risk": {
+    "risk_per_trade": 0.015,
+    "max_concurrent_positions": 2,
+    "daily_risk_limit": 0.06,
+    "max_position_size_usd": 40000,
+    "kill_switch_loss_limit": 0.12,
+    "correlation_limit": 0.25
+  },
+  "liquidity_filters": {
+    "min_24h_volume_usd": 30000000,
+    "min_oi_usd": 8000000,
+    "max_spread_bps": 12,
+    "min_depth_usd_0_5pct": 35000,
+    "min_depth_usd_0_3pct": 20000,
+    "min_trades_per_minute": 6.0
+  },
+  "volatility_filters": {
+    "atr_range_min": 0.015,
+    "atr_range_max": 0.12,
+    "bb_width_percentile_max": 80,
+    "volume_surge_1h_min": 1.8,
+    "volume_surge_5m_min": 2.5,
+    "oi_delta_threshold": 0.04
+  },
+  "signal_config": {
+    "momentum_volume_multiplier": 2.2,
+    "momentum_body_ratio_min": 0.5,
+    "momentum_epsilon": 0.0018,
+    "retest_pierce_tolerance": 0.002,
+    "retest_max_pierce_atr": 0.3,
+    "l2_imbalance_threshold": 0.2,
+    "vwap_gap_max_atr": 2.0
+  },
+  "position_config": {
+    "tp1_r": 1.2,
+    "tp1_size_pct": 0.45,
+    "tp2_r": 2.5,
+    "tp2_size_pct": 0.35,
+    "chandelier_atr_mult": 2.5,
+    "max_hold_time_hours": 18,
+    "add_on_enabled": false,
+    "add_on_max_size_pct": 0.0
+  },
+  "scanner_config": {
+    "max_candidates": 15,
+    "scan_interval_seconds": 150,
+    "score_weights": {
+      "vol_surge": 0.30,
+      "oi_delta": 0.25,
+      "atr_quality": 0.20,
+      "correlation": 0.15,
+      "trades_per_minute": 0.05,
+      "losers_reversal": 0.05
+    },
+    "symbol_whitelist": null,
+    "symbol_blacklist": ["USDT/USD", "USDC/USD", "BTC/USDT:USDT", "ETH/USDT:USDT"],
+    "top_n_by_volume": 100,
+    "losers_filter": {
+      "enabled": true,
+      "max_24h_change_pct": -6.0,
+      "top_n_losers": 30
+    }
+  },
+  "execution_config": {
+    "enable_twap": true,
+    "enable_iceberg": true,
+    "max_depth_fraction": 0.22,
+    "twap_min_slices": 5,
+    "twap_max_slices": 10,
+    "twap_interval_seconds": 2.5,
+    "iceberg_min_notional": 4000.0,
+    "limit_offset_bps": 1.8,
+    "spread_widen_bps": 10.0,
+    "deadman_timeout_ms": 7000,
+    "taker_fee_bps": 5.5,
+    "maker_fee_bps": 1.0
+  }
+}

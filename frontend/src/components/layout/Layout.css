@@ -1,0 +1,102 @@
+/**
+ * Стили для основного layout
+ */
+
+/* Основной контейнер с фиксированной высотой */
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Фиксированная шапка */
+.app-header {
+  flex-shrink: 0;
+  z-index: 1000;
+}
+
+/* Основной контент с прокруткой */
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 0;
+  background-color: #f8f9fa;
+}
+
+/* Контейнер контента */
+.app-content {
+  min-height: 100%;
+  padding: 0 15px;
+}
+
+/* Стили для страниц */
+.page-container {
+  min-height: calc(100vh - 200px); /* Вычитаем высоту шапки и отступов */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Контент страницы */
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Карточки с фиксированной высотой */
+.fixed-height-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fixed-height-card .card-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Таблицы с фиксированной высотой */
+.fixed-height-table {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .app-main {
+    padding: 0.5rem 0;
+  }
+  
+  .app-content {
+    padding: 0 10px;
+  }
+  
+  .page-container {
+    min-height: calc(100vh - 150px);
+  }
+}
+
+/* Стили для плавной прокрутки */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Скрытие полосы прокрутки для WebKit браузеров */
+.app-main::-webkit-scrollbar {
+  width: 6px;
+}
+
+.app-main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.app-main::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.app-main::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

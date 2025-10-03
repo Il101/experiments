@@ -1,0 +1,220 @@
+{
+  "name": "video_strategy_aggressive",
+  "description": "Aggressive implementation with tighter TPs, faster exits, and higher risk tolerance for experienced traders",
+  "target_markets": "BTC/USDT, ETH/USDT, SOL/USDT - high liquidity pairs with strong momentum",
+  
+  "risk": {
+    "risk_per_trade": 0.02,
+    "max_concurrent_positions": 5,
+    "daily_risk_limit": 0.10,
+    "max_position_size_usd": 20000,
+    "kill_switch_loss_limit": 0.15,
+    "correlation_limit": 0.8,
+    "max_consecutive_losses": 3
+  },
+  
+  "liquidity_filters": {
+    "min_24h_volume_usd": 100000000,
+    "min_oi_usd": null,
+    "max_spread_bps": 8.0,
+    "min_depth_usd_0_5pct": 200000.0,
+    "min_depth_usd_0_3pct": 100000.0,
+    "min_trades_per_minute": 100.0
+  },
+  
+  "volatility_filters": {
+    "atr_range_min": 0.01,
+    "atr_range_max": 0.05,
+    "bb_width_percentile_max": 0.9,
+    "volume_surge_1h_min": 1.5,
+    "volume_surge_5m_min": 2.0,
+    "oi_delta_threshold": 0.1
+  },
+  
+  "signal_config": {
+    "momentum_volume_multiplier": 2.5,
+    "momentum_body_ratio_min": 0.7,
+    "momentum_epsilon": 0.002,
+    "retest_pierce_tolerance": 0.2,
+    "retest_max_pierce_atr": 0.3,
+    "l2_imbalance_threshold": 2.5,
+    "vwap_gap_max_atr": 2.0,
+    "prelevel_limit_offset_bps": 1.5,
+    "enter_on_density_eat_ratio": 0.8,
+    "tpm_on_touch_frac": 0.8,
+    
+    "entry_rules": {
+      "require_volume_confirmation": true,
+      "volume_confirmation_multiplier": 2.0,
+      "require_density_confirmation": true,
+      "density_confirmation_threshold": 2.5,
+      "require_momentum": true,
+      "momentum_min_slope_pct": 0.8,
+      "momentum_check_bars": 2,
+      "validate_approach": true,
+      "approach_max_slope_pct": 2.0,
+      "approach_min_consolidation_bars": 2,
+      "max_distance_from_level_bps": 20.0,
+      "require_clean_breakout": true,
+      "false_start_lookback_bars": 5,
+      "avoid_session_start_minutes": 3,
+      "avoid_session_end_minutes": 10
+    },
+    
+    "market_quality": {
+      "flat_market_filter_enabled": true,
+      "flat_market_atr_threshold": 0.5,
+      "flat_market_lookback_bars": 15,
+      "consolidation_filter_enabled": false,
+      "consolidation_range_threshold_pct": 0.8,
+      "consolidation_min_bars": 5,
+      "require_stable_volatility": false,
+      "volatility_spike_threshold": 3.0,
+      "volatility_lookback_bars": 15,
+      "require_clear_trend": true,
+      "trend_slope_min_pct": 0.5,
+      "trend_lookback_bars": 15,
+      "noise_filter_enabled": true,
+      "noise_threshold": 0.6
+    }
+  },
+  
+  "position_config": {
+    "tp_levels": [
+      {
+        "level_name": "TP1",
+        "reward_multiple": 1.0,
+        "size_pct": 0.30,
+        "placement_mode": "smart"
+      },
+      {
+        "level_name": "TP2",
+        "reward_multiple": 2.0,
+        "size_pct": 0.30,
+        "placement_mode": "smart"
+      },
+      {
+        "level_name": "TP3",
+        "reward_multiple": 3.5,
+        "size_pct": 0.25,
+        "placement_mode": "smart"
+      },
+      {
+        "level_name": "TP4",
+        "reward_multiple": 5.0,
+        "size_pct": 0.15,
+        "placement_mode": "adaptive"
+      }
+    ],
+    
+    "tp_smart_placement": {
+      "enabled": true,
+      "avoid_density_zones": true,
+      "density_zone_buffer_bps": 8.0,
+      "avoid_sr_levels": true,
+      "sr_level_buffer_bps": 12.0,
+      "prefer_round_numbers": true,
+      "round_number_step": 0.10,
+      "max_adjustment_bps": 25.0
+    },
+    
+    "sl_mode": "chandelier",
+    "sl_r": 1.0,
+    "chandelier_atr_mult": 2.5,
+    "chandelier_lookback_bars": 14,
+    
+    "breakeven_enabled": true,
+    "breakeven_trigger_r": 0.8,
+    "breakeven_buffer_bps": 3.0,
+    
+    "trailing_enabled": true,
+    "trailing_activation_r": 1.5,
+    "trailing_step_bps": 15.0,
+    
+    "exit_rules": {
+      "failed_breakout_enabled": true,
+      "failed_breakout_bars": 2,
+      "failed_breakout_retest_threshold": 0.6,
+      "activity_drop_enabled": true,
+      "activity_drop_threshold": 0.4,
+      "activity_drop_window_bars": 3,
+      "weak_impulse_enabled": true,
+      "weak_impulse_min_move_pct": 0.5,
+      "weak_impulse_check_bars": 3,
+      "max_hold_time_hours": 12.0,
+      "time_stop_minutes": null,
+      "volatility_exit_enabled": true,
+      "volatility_spike_threshold": 2.5
+    },
+    
+    "fsm_config": {
+      "enabled": true,
+      "entry_confirmation_bars": 1,
+      "entry_max_slippage_bps": 15.0,
+      "running_monitor_interval_s": 3,
+      "running_breakeven_trigger_r": 0.8,
+      "partial_closed_trail_enabled": true,
+      "partial_closed_trail_trigger_r": 1.5,
+      "partial_closed_trail_step_bps": 15.0,
+      "breakeven_buffer_bps": 3.0,
+      "breakeven_lock_profit_enabled": true,
+      "breakeven_lock_profit_bps": 8.0,
+      "trailing_activation_r": 1.5,
+      "trailing_step_bps": 15.0,
+      "trailing_acceleration_enabled": true,
+      "trailing_accel_after_r": 3.0,
+      "trailing_accel_step_bps": 8.0,
+      "exiting_timeout_s": 20,
+      "exiting_panic_after_attempts": 2
+    },
+    
+    "max_hold_time_hours": 12,
+    "add_on_enabled": true,
+    "add_on_max_size_pct": 0.5
+  },
+  
+  "scanner_config": {
+    "max_candidates": 15,
+    "scan_interval_seconds": 30,
+    "score_weights": {
+      "volume": 0.30,
+      "volatility": 0.25,
+      "level_quality": 0.25,
+      "momentum": 0.15,
+      "liquidity": 0.05
+    },
+    "symbol_whitelist": ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"],
+    "symbol_blacklist": null,
+    "top_n_by_volume": 100
+  },
+  
+  "strategy_priority": "breakout_momentum",
+  
+  "execution_config": {
+    "use_limit_orders": true,
+    "limit_offset_bps": 1.5,
+    "limit_timeout_seconds": 20,
+    "fill_or_kill": false,
+    "post_only": false,
+    "twap_enabled": false,
+    "twap_duration_seconds": 45,
+    "twap_min_slices": 3,
+    "twap_max_slices": 8
+  },
+  
+  "levels_rules": {
+    "min_touches": 2,
+    "prefer_round_numbers": true,
+    "round_step_candidates": [0.01, 0.05, 0.10, 1.00, 5.00, 10.00],
+    "cascade_min_levels": 2,
+    "cascade_radius_bps": 12.0,
+    "approach_slope_max_pct_per_bar": 2.0,
+    "prebreakout_consolidation_min_bars": 2
+  },
+  
+  "density_config": {
+    "k_density": 6.0,
+    "bucket_ticks": 2,
+    "lookback_window_s": 180
+  }
+}

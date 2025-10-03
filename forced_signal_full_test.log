@@ -1,0 +1,787 @@
+2025-10-03 15:06:54,719 - breakout_bot.utils.monitoring_manager - INFO - MonitoringManager initialized
+2025-10-03 15:06:54,719 - breakout_bot.utils.monitoring_manager - INFO - __init__:41 - MonitoringManager initialized
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - OptimizedOrchestraEngine initialized with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - __init__:169 - OptimizedOrchestraEngine initialized with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - Trading mode: paper
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - __init__:170 - Trading mode: paper
+2025-10-03 15:06:54,720 - breakout_bot.core.state_machine - INFO - StateMachine initialized with state: initializing
+2025-10-03 15:06:54,720 - breakout_bot.core.state_machine - INFO - __init__:158 - StateMachine initialized with state: initializing
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:334 - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:345 - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:404 - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:409 - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Initialized paper trading with $100,000 balance
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:157 - Initialized paper trading with $100,000 balance
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Initialized in PAPER TRADING mode with live market data
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:359 - Initialized in PAPER TRADING mode with live market data
+2025-10-03 15:06:54,720 - breakout_bot.scanner.market_scanner - INFO - Initialized scanner with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.scanner.market_scanner - INFO - __init__:410 - Initialized scanner with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.signals.signal_generator - INFO - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.signals.signal_generator - INFO - __init__:667 - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.signals.signal_generator - INFO - Primary strategy: momentum
+2025-10-03 15:06:54,720 - breakout_bot.signals.signal_generator - INFO - __init__:668 - Primary strategy: momentum
+2025-10-03 15:06:54,720 - breakout_bot.risk.risk_manager - INFO - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.risk.risk_manager - INFO - __init__:477 - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.risk.risk_manager - INFO - Risk per trade: 1.5%
+2025-10-03 15:06:54,720 - breakout_bot.risk.risk_manager - INFO - __init__:478 - Risk per trade: 1.5%
+2025-10-03 15:06:54,720 - breakout_bot.risk.risk_manager - INFO - Max positions: 3
+2025-10-03 15:06:54,720 - breakout_bot.risk.risk_manager - INFO - __init__:479 - Max positions: 3
+2025-10-03 15:06:54,720 - breakout_bot.position.position_manager - INFO - Initialized position manager with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.position.position_manager - INFO - __init__:239 - Initialized position manager with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - Initializing trading system components...
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - initialize:221 - Initializing trading system components...
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:334 - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:345 - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:404 - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:409 - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Initialized paper trading with $100,000 balance
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:157 - Initialized paper trading with $100,000 balance
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - Initialized in PAPER TRADING mode with live market data
+2025-10-03 15:06:54,720 - breakout_bot.exchange.exchange_client - INFO - __init__:359 - Initialized in PAPER TRADING mode with live market data
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - Paper trading mode: starting equity set to $100,000.00
+2025-10-03 15:06:54,720 - breakout_bot.core.engine - INFO - initialize:233 - Paper trading mode: starting equity set to $100,000.00
+2025-10-03 15:06:54,720 - breakout_bot.scanner.market_scanner - INFO - Initialized scanner with preset: breakout_v1_working
+2025-10-03 15:06:54,720 - breakout_bot.scanner.market_scanner - INFO - __init__:410 - Initialized scanner with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.signals.signal_generator - INFO - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.signals.signal_generator - INFO - __init__:667 - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.signals.signal_generator - INFO - Primary strategy: momentum
+2025-10-03 15:06:54,721 - breakout_bot.signals.signal_generator - INFO - __init__:668 - Primary strategy: momentum
+2025-10-03 15:06:54,721 - breakout_bot.risk.risk_manager - INFO - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.risk.risk_manager - INFO - __init__:477 - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.risk.risk_manager - INFO - Risk per trade: 1.5%
+2025-10-03 15:06:54,721 - breakout_bot.risk.risk_manager - INFO - __init__:478 - Risk per trade: 1.5%
+2025-10-03 15:06:54,721 - breakout_bot.risk.risk_manager - INFO - Max positions: 3
+2025-10-03 15:06:54,721 - breakout_bot.risk.risk_manager - INFO - __init__:479 - Max positions: 3
+2025-10-03 15:06:54,721 - breakout_bot.position.position_manager - INFO - Initialized position manager with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.position.position_manager - INFO - __init__:239 - Initialized position manager with preset: breakout_v1_working
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - Initializing enhanced market microstructure components...
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - initialize:246 - Initializing enhanced market microstructure components...
+2025-10-03 15:06:54,721 - breakout_bot.data.streams.trades_ws - INFO - TradesAggregator initialized
+2025-10-03 15:06:54,721 - breakout_bot.data.streams.trades_ws - INFO - __init__:130 - TradesAggregator initialized
+2025-10-03 15:06:54,721 - breakout_bot.data.streams.orderbook_ws - INFO - OrderBookManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.data.streams.orderbook_ws - INFO - __init__:89 - OrderBookManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.features.density - INFO - DensityDetector initialized: k=7.0, bucket_ticks=3, eat_ratio=0.75
+2025-10-03 15:06:54,721 - breakout_bot.features.density - INFO - __init__:87 - DensityDetector initialized: k=7.0, bucket_ticks=3, eat_ratio=0.75
+2025-10-03 15:06:54,721 - breakout_bot.features.activity - INFO - ActivityTracker initialized: lookback=60, drop_threshold=0.4
+2025-10-03 15:06:54,721 - breakout_bot.features.activity - INFO - __init__:68 - ActivityTracker initialized: lookback=60, drop_threshold=0.4
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - Enhanced market microstructure components initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - initialize:282 - Enhanced market microstructure components initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.state_machine - INFO - StateMachine initialized with state: initializing
+2025-10-03 15:06:54,721 - breakout_bot.core.state_machine - INFO - __init__:158 - StateMachine initialized with state: initializing
+2025-10-03 15:06:54,721 - breakout_bot.core.error_handler - INFO - ErrorHandler initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.error_handler - INFO - __init__:198 - ErrorHandler initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.scanning_manager - INFO - ScanningManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.scanning_manager - INFO - __init__:85 - ScanningManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.signal_manager - INFO - SignalManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.signal_manager - INFO - __init__:85 - SignalManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.utils.resource_monitor - INFO - Resource monitor initialized
+2025-10-03 15:06:54,721 - breakout_bot.utils.resource_monitor - INFO - __init__:92 - Resource monitor initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.resource_manager - INFO - ResourceManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.resource_manager - INFO - __init__:74 - ResourceManager initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.trading_orchestrator - INFO - TradingOrchestrator initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.trading_orchestrator - INFO - __init__:91 - TradingOrchestrator initialized
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - All components initialized successfully
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - initialize:340 - All components initialized successfully
+2025-10-03 15:06:54,721 - breakout_bot.core.state_machine - INFO - State transition: initializing -> scanning (Initialization complete)
+2025-10-03 15:06:54,721 - breakout_bot.core.state_machine - INFO - transition_to:237 - State transition: initializing -> scanning (Initialization complete)
+2025-10-03 15:06:54,721 - breakout_bot - INFO - [state_machine] State transition: initializing -> scanning
+2025-10-03 15:06:54,721 - breakout_bot - INFO - _log:138 - [state_machine] State transition: initializing -> scanning
+2025-10-03 15:06:54,721 - breakout_bot.core.resource_manager - INFO - Starting resource monitoring...
+2025-10-03 15:06:54,721 - breakout_bot.core.resource_manager - INFO - start_monitoring:78 - Starting resource monitoring...
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - Starting OptimizedOrchestraEngine...
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - start:373 - Starting OptimizedOrchestraEngine...
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - Starting main trading loop...
+2025-10-03 15:06:54,721 - breakout_bot.core.engine - INFO - _main_trading_loop:404 - Starting main trading loop...
+2025-10-03 15:06:54,721 - breakout_bot.core.trading_orchestrator - INFO - Starting trading orchestrator cycle...
+2025-10-03 15:06:54,721 - breakout_bot.core.trading_orchestrator - INFO - start_trading_cycle:95 - Starting trading orchestrator cycle...
+2025-10-03 15:06:54,721 - breakout_bot - INFO - [orchestrator] Executing scanning cycle...
+2025-10-03 15:06:54,721 - breakout_bot - INFO - _log:138 - [orchestrator] Executing scanning cycle...
+2025-10-03 15:06:54,721 - breakout_bot - INFO - [scanning] Starting market scan...
+2025-10-03 15:06:54,721 - breakout_bot - INFO - _log:138 - [scanning] Starting market scan...
+2025-10-03 15:06:54,721 - breakout_bot.utils.monitoring_manager - WARNING - Session f26aa50e-0a95-4b3b-ac4d-7ac559c47386 not found
+2025-10-03 15:06:54,721 - breakout_bot.utils.monitoring_manager - WARNING - add_checkpoint:149 - Session f26aa50e-0a95-4b3b-ac4d-7ac559c47386 not found
+2025-10-03 15:06:54,721 - breakout_bot.exchange.exchange_client - INFO - Creating market data exchange for bybit
+2025-10-03 15:06:54,721 - breakout_bot.exchange.exchange_client - INFO - _get_market_exchange:437 - Creating market data exchange for bybit
+2025-10-03 15:06:56,247 - breakout_bot.exchange.exchange_client - INFO - Found 589 active USDT-M futures pairs
+2025-10-03 15:06:56,247 - breakout_bot.exchange.exchange_client - INFO - fetch_markets:921 - Found 589 active USDT-M futures pairs
+2025-10-03 15:06:56,247 - breakout_bot.core.scanning_manager - DEBUG - Filtered 589 symbols to 50 for scanning
+2025-10-03 15:06:56,247 - breakout_bot.core.scanning_manager - INFO - Fetching comprehensive market data for 50 symbols
+2025-10-03 15:06:56,247 - breakout_bot.core.scanning_manager - INFO - _fetch_market_data_optimized:286 - Fetching comprehensive market data for 50 symbols
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for BTC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for BTC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 0/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 1
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for ETH/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for ETH/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for BNB/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for BNB/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for ADA/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for ADA/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,248 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for SOL/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for SOL/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for DOT/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for DOT/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for AVAX/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for AVAX/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.019s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for LINK/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for LINK/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for UNI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for UNI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,249 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 0G/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 0G/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000000BABYDOGE/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000000BABYDOGE/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000000CHEEMS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000000CHEEMS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.018s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000000MOG/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000000MOG/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000000PEIPEI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000000PEIPEI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,250 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 10000COQ/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 10000COQ/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 10000ELON/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 10000ELON/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 10000LADYS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 10000LADYS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 10000QUBIC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 10000QUBIC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.017s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 10000SATS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 10000SATS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 10000WEN/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 10000WEN/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:56,252 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.016s
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 2
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 3
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 4
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 5
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 6
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 7
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 8
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 9
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 10
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 11
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 12
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 13
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 14
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 15
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 16
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 17
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 18
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 19
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 20
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 21
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 22
+2025-10-03 15:06:56,268 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 23
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 24
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 25
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 26
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 27
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 28
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 29
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 30
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 31
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 32
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 33
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 34
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 35
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 36
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 37
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 38
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 39
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 40
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 41
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 42
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 43
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 44
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 45
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 46
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 47
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 48
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 49
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 50
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 51
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 52
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 53
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 54
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 55
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 56
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 57
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 58
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 59
+2025-10-03 15:06:56,269 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 60
+2025-10-03 15:06:56,492 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:56,545 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:56,598 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:56,645 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:56,694 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:56,737 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:56,784 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:56,850 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:56,856 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 10000COQ/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,856 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 10000COQ/USDT:USDT - paper_mode: True
+2025-10-03 15:06:56,887 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:56,945 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:56,985 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,036 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,094 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:57,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:57,153 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 10000ELON/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,153 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 10000ELON/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,195 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,243 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:57,284 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,336 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,383 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,445 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:57,488 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,543 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,549 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 1000000PEIPEI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,549 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 1000000PEIPEI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,583 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,645 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,683 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,688 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 10000WEN/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,688 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 10000WEN/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,742 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,786 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,791 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 10000LADYS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,791 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 10000LADYS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,834 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:57,894 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:57,935 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:57,942 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for AVAX/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,942 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for AVAX/USDT:USDT - paper_mode: True
+2025-10-03 15:06:57,984 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,096 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,137 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:58,183 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:58,233 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,238 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 0G/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,238 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 0G/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,337 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,388 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,396 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,434 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:58,439 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for LINK/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,439 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for LINK/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,523 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,544 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,549 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 1000000MOG/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,549 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 1000000MOG/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,595 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,601 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 10000SATS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,601 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 10000SATS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,607 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,612 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 1000000CHEEMS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,612 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 1000000CHEEMS/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,633 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,638 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 1000000BABYDOGE/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,638 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 1000000BABYDOGE/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,685 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,741 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,747 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for 10000QUBIC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,747 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for 10000QUBIC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,785 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:58,835 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:58,897 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:58,903 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for BNB/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,903 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for BNB/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:58,942 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for DOT/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,942 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for DOT/USDT:USDT - paper_mode: True
+2025-10-03 15:06:58,987 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:59,046 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:59,051 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for UNI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,051 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for UNI/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,097 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:59,183 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:59,235 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:59,285 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:59,345 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:59,351 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for SOL/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,351 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for SOL/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,393 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/tickers
+2025-10-03 15:06:59,398 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for ETH/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,398 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for ETH/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,433 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/orderbook
+2025-10-03 15:06:59,439 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for ADA/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,439 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for ADA/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,455 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:06:59,461 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest called for BTC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,461 - breakout_bot.exchange.exchange_client - INFO - fetch_open_interest:744 - fetch_open_interest called for BTC/USDT:USDT - paper_mode: True
+2025-10-03 15:06:59,500 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,500 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 0/50 requests
+2025-10-03 15:06:59,500 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 1
+2025-10-03 15:06:59,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 1/50 requests
+2025-10-03 15:06:59,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 2
+2025-10-03 15:06:59,590 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,590 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 2/50 requests
+2025-10-03 15:06:59,590 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 3
+2025-10-03 15:06:59,641 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,641 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 3/50 requests
+2025-10-03 15:06:59,641 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 4
+2025-10-03 15:06:59,689 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,689 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 4/50 requests
+2025-10-03 15:06:59,689 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 5
+2025-10-03 15:06:59,738 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,738 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 5/50 requests
+2025-10-03 15:06:59,739 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 6
+2025-10-03 15:06:59,789 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,789 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 6/50 requests
+2025-10-03 15:06:59,789 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 7
+2025-10-03 15:06:59,849 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,849 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 7/50 requests
+2025-10-03 15:06:59,849 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 8
+2025-10-03 15:06:59,890 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,890 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 8/50 requests
+2025-10-03 15:06:59,890 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 9
+2025-10-03 15:06:59,941 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,941 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 9/50 requests
+2025-10-03 15:06:59,941 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 10
+2025-10-03 15:06:59,991 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:06:59,991 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 10/50 requests
+2025-10-03 15:06:59,991 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 11
+2025-10-03 15:07:00,045 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,045 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 11/50 requests
+2025-10-03 15:07:00,045 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 12
+2025-10-03 15:07:00,151 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,151 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 12/50 requests
+2025-10-03 15:07:00,151 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 13
+2025-10-03 15:07:00,203 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,203 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 13/50 requests
+2025-10-03 15:07:00,203 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 14
+2025-10-03 15:07:00,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 14/50 requests
+2025-10-03 15:07:00,251 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 15
+2025-10-03 15:07:00,302 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,302 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 15/50 requests
+2025-10-03 15:07:00,302 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 16
+2025-10-03 15:07:00,352 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,352 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 16/50 requests
+2025-10-03 15:07:00,352 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 17
+2025-10-03 15:07:00,393 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,393 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 17/50 requests
+2025-10-03 15:07:00,393 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 18
+2025-10-03 15:07:00,410 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,410 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 18/50 requests
+2025-10-03 15:07:00,411 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.002s
+2025-10-03 15:07:00,413 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 19
+2025-10-03 15:07:00,456 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,457 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 19/50 requests
+2025-10-03 15:07:00,457 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 20
+2025-10-03 15:07:00,489 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,489 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 10000COQ/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,489 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000BONK/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,489 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000BONK/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 20/50 requests
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 21
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 21/50 requests
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 21/50 requests
+2025-10-03 15:07:00,490 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,510 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 22
+2025-10-03 15:07:00,510 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 23
+2025-10-03 15:07:00,539 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,540 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 10000ELON/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,540 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000BTT/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,540 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000BTT/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 21/50 requests
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 22
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 22/50 requests
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 22/50 requests
+2025-10-03 15:07:00,540 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,560 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 23
+2025-10-03 15:07:00,560 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 24
+2025-10-03 15:07:00,585 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,586 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 1000000PEIPEI/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,586 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000CAT/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,586 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000CAT/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 24/50 requests
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 25
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 25/50 requests
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 25/50 requests
+2025-10-03 15:07:00,586 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,606 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 26
+2025-10-03 15:07:00,606 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 27
+2025-10-03 15:07:00,635 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,635 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 10000WEN/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,635 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000FLOKI/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,635 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000FLOKI/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,635 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,635 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 26/50 requests
+2025-10-03 15:07:00,635 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 27
+2025-10-03 15:07:00,636 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,636 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 27/50 requests
+2025-10-03 15:07:00,636 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,636 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,636 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 27/50 requests
+2025-10-03 15:07:00,636 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,656 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 28
+2025-10-03 15:07:00,656 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 29
+2025-10-03 15:07:00,683 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,684 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 10000LADYS/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,684 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000LUNC/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,684 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000LUNC/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 28/50 requests
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 29
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 29/50 requests
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 29/50 requests
+2025-10-03 15:07:00,684 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,704 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 30
+2025-10-03 15:07:00,704 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 31
+2025-10-03 15:07:00,751 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,752 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for AVAX/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,752 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000NEIROCTO/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,752 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000NEIROCTO/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 29/50 requests
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 30
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 30/50 requests
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 30/50 requests
+2025-10-03 15:07:00,752 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,772 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 31
+2025-10-03 15:07:00,772 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 32
+2025-10-03 15:07:00,794 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,795 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 0G/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,795 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000PEPE/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,795 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000PEPE/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 31/50 requests
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 32
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 32/50 requests
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 32/50 requests
+2025-10-03 15:07:00,795 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,815 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 33
+2025-10-03 15:07:00,815 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 34
+2025-10-03 15:07:00,835 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,836 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for LINK/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,836 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000RATS/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,836 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000RATS/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 34/50 requests
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 35
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 35/50 requests
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 35/50 requests
+2025-10-03 15:07:00,836 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,856 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 36
+2025-10-03 15:07:00,856 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 37
+2025-10-03 15:07:00,890 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,891 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 1000000MOG/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,891 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000TAG/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,891 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000TAG/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 35/50 requests
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 36
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 36/50 requests
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 36/50 requests
+2025-10-03 15:07:00,891 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,911 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 37
+2025-10-03 15:07:00,911 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 38
+2025-10-03 15:07:00,935 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,936 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 10000SATS/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,936 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000TOSHI/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,936 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000TOSHI/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 38/50 requests
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 39
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 39/50 requests
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,936 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,937 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 39/50 requests
+2025-10-03 15:07:00,937 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,957 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 40
+2025-10-03 15:07:00,957 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 41
+2025-10-03 15:07:00,997 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:00,998 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 1000000CHEEMS/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:00,998 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000TURBO/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,998 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000TURBO/USDT:USDT - paper_mode: True
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 39/50 requests
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 40
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 40/50 requests
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 40/50 requests
+2025-10-03 15:07:00,998 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:01,018 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 41
+2025-10-03 15:07:01,019 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 42
+2025-10-03 15:07:01,048 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:01,049 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for 1000000BABYDOGE/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:01,049 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000XEC/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,049 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000XEC/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 41/50 requests
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 42
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 42/50 requests
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 42/50 requests
+2025-10-03 15:07:01,049 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:01,069 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 43
+2025-10-03 15:07:01,070 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 44
+2025-10-03 15:07:01,087 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:01,087 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for BNB/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:01,088 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1000X/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,088 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1000X/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 44/50 requests
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.002s
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 44/50 requests
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.002s
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 44/50 requests
+2025-10-03 15:07:01,088 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.002s
+2025-10-03 15:07:01,090 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 45
+2025-10-03 15:07:01,090 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 46
+2025-10-03 15:07:01,090 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 47
+2025-10-03 15:07:01,146 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:01,147 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for DOT/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:01,147 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 1INCH/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,147 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 1INCH/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 47/50 requests
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 48
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 48/50 requests
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 48/50 requests
+2025-10-03 15:07:01,147 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.020s
+2025-10-03 15:07:01,167 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 49
+2025-10-03 15:07:01,167 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 50
+2025-10-03 15:07:01,196 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Successfully executed /v5/market/kline
+2025-10-03 15:07:01,197 - breakout_bot.exchange.exchange_client - DEBUG - Failed to calculate BTC correlation for UNI/USDT:USDT: 'Candle' object is not subscriptable
+2025-10-03 15:07:01,197 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker called for 2Z/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,197 - breakout_bot.exchange.exchange_client - INFO - fetch_ticker:721 - fetch_ticker called for 2Z/USDT:USDT - paper_mode: True
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/tickers (attempt 1/4)
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 49/50 requests
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 50
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/orderbook (attempt 1/4)
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 50/50 requests
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - WARNING - Rate limit exceeded for market_data, waiting 0.01s
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - WARNING - wait_if_needed:92 - Rate limit exceeded for market_data, waiting 0.01s
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Executing /v5/market/kline (attempt 1/4)
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Rate limiter check: market_data - 50/50 requests
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - WARNING - Rate limit exceeded for market_data, waiting 0.01s
+2025-10-03 15:07:01,197 - breakout_bot.exchange.bybit_rate_limiter - WARNING - wait_if_needed:92 - Rate limit exceeded for market_data, waiting 0.01s
+2025-10-03 15:07:01,203 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.014s
+2025-10-03 15:07:01,203 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Adding min delay: 0.014s
+2025-10-03 15:07:01,217 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 50
+2025-10-03 15:07:01,217 - breakout_bot.exchange.bybit_rate_limiter - DEBUG - Request recorded for market_data, total: 51

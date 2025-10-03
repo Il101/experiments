@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-09-22T23:40:13.903092",
+  "system": {
+    "total_gb": 8.0,
+    "used_gb": 3.16,
+    "available_gb": 1.0,
+    "percent_used": 87.5
+  },
+  "process": {
+    "rss_mb": 18.2,
+    "vms_mb": 401509.4,
+    "percent_of_system": 0.22
+  }
+}

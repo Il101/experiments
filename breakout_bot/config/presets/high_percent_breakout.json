@@ -1,0 +1,101 @@
+{
+  "name": "high_percent_breakout",
+  "description": "Advanced high-percentage breakout strategy with density, activity, and enhanced level detection",
+  "target_markets": "High liquidity cryptocurrencies with strong momentum",
+  "strategy_priority": "momentum",
+  "risk": {
+    "risk_per_trade": 0.015,
+    "max_concurrent_positions": 3,
+    "daily_risk_limit": 0.08,
+    "max_position_size_usd": 60000,
+    "kill_switch_loss_limit": 0.18,
+    "correlation_limit": 0.4,
+    "max_consecutive_losses": 5
+  },
+  "liquidity_filters": {
+    "min_24h_volume_usd": 20000000,
+    "min_oi_usd": 8000000,
+    "max_spread_bps": 15,
+    "min_depth_usd_0_5pct": 20000,
+    "min_depth_usd_0_3pct": 12000,
+    "min_trades_per_minute": 5.0
+  },
+  "volatility_filters": {
+    "atr_range_min": 0.008,
+    "atr_range_max": 0.12,
+    "bb_width_percentile_max": 85,
+    "volume_surge_1h_min": 1.3,
+    "volume_surge_5m_min": 1.7,
+    "oi_delta_threshold": 0.025
+  },
+  "signal_config": {
+    "momentum_volume_multiplier": 1.5,
+    "momentum_body_ratio_min": 0.35,
+    "momentum_epsilon": 0.0015,
+    "retest_pierce_tolerance": 0.002,
+    "retest_max_pierce_atr": 0.4,
+    "l2_imbalance_threshold": 0.18,
+    "vwap_gap_max_atr": 2.2,
+    "prelevel_limit_offset_bps": 2.0,
+    "enter_on_density_eat_ratio": 0.75,
+    "tpm_on_touch_frac": 0.7
+  },
+  "position_config": {
+    "tp1_r": 1.6,
+    "tp1_size_pct": 0.4,
+    "tp2_r": 3.0,
+    "tp2_size_pct": 0.35,
+    "chandelier_atr_mult": 2.5,
+    "max_hold_time_hours": 24,
+    "add_on_enabled": true,
+    "add_on_max_size_pct": 0.3,
+    "time_stop_minutes": 180,
+    "panic_exit_on_activity_drop": true,
+    "activity_drop_threshold": 0.4
+  },
+  "scanner_config": {
+    "max_candidates": 25,
+    "scan_interval_seconds": 90,
+    "score_weights": {
+      "vol_surge": 0.3,
+      "oi_delta": 0.15,
+      "atr_quality": 0.2,
+      "correlation": 0.15,
+      "trades_per_minute": 0.2
+    },
+    "symbol_whitelist": null,
+    "symbol_blacklist": [
+      "USDT/USD",
+      "USDC/USD"
+    ],
+    "top_n_by_volume": 150
+  },
+  "execution_config": {
+    "enable_twap": true,
+    "enable_iceberg": true,
+    "max_depth_fraction": 0.25,
+    "twap_min_slices": 4,
+    "twap_max_slices": 12,
+    "twap_interval_seconds": 2.5,
+    "iceberg_min_notional": 6000,
+    "limit_offset_bps": 1.5,
+    "spread_widen_bps": 12,
+    "deadman_timeout_ms": 8000,
+    "taker_fee_bps": 6.5,
+    "maker_fee_bps": 1.5
+  },
+  "levels_rules": {
+    "min_touches": 2,
+    "prefer_round_numbers": true,
+    "round_step_candidates": [0.01, 0.05, 0.10, 1.00, 5.00, 10.00],
+    "cascade_min_levels": 2,
+    "cascade_radius_bps": 15,
+    "approach_slope_max_pct_per_bar": 1.5,
+    "prebreakout_consolidation_min_bars": 3
+  },
+  "density_config": {
+    "k_density": 7.0,
+    "bucket_ticks": 3,
+    "lookback_window_s": 300
+  }
+}

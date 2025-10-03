@@ -1,0 +1,14 @@
+/* Trading Page Specific Styles */
+
+.positions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .positions-grid {
+    grid-template-columns: 1fr;
+  }
+}

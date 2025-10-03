@@ -1,0 +1,1444 @@
+"""
+Configuration management for Breakout Bot Trading System.
+
+This module handles loading and validation of trading presets and system configuration.
+"""
+
+from __future__ import annotations
+
+import os
+from pathlib import Path
+from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from pydantic import BaseModel, Field, field_validator
+from dotenv import load_dotenv
+import json
+
+# Load environment variables
+load_dotenv()
+
+
+class RiskConfig(BaseModel):
+    """Risk management configuration."""
+    
+    risk_per_trade: float = Field(..., description="Risk per trade as decimal (e.g., 0.006 = 0.6%)")
+    max_concurrent_positions: int = Field(..., description="Maximum concurrent positions")
+    daily_risk_limit: float = Field(..., description="Daily risk limit as decimal")
+    max_position_size_usd: Optional[float] = Field(None, description="Maximum position size in USD")
+    kill_switch_loss_limit: float = Field(..., description="Kill switch loss limit")
+    correlation_limit: float = Field(..., description="Maximum allowed correlation with BTC")
+    max_consecutive_losses: int = Field(default=5, description="Maximum consecutive losses before kill switch")
+    
+    @field_validator('risk_per_trade', 'daily_risk_limit', 'kill_switch_loss_limit')
+    @classmethod
+    def validate_percentages(cls, v: float) -> float:
+        """Validate percentage values are reasonable."""
+        if not 0 < v <= 1:
+            raise ValueError("Percentage values must be between 0 and 1")
+        return v
+    
+    @field_validator('max_concurrent_positions')
+    @classmethod
+    def validate_max_positions(cls, v: int) -> int:
+        """Validate max positions is reasonable."""
+        if not 1 <= v <= 10:
+            raise ValueError("Max concurrent positions must be between 1 and 10")
+        return v
+    
+    @field_validator('max_consecutive_losses')
+    @classmethod
+    def validate_max_consecutive_losses(cls, v: int) -> int:
+        """Validate max consecutive losses is reasonable."""
+        if not 1 <= v <= 20:
+            raise ValueError("Max consecutive losses must be between 1 and 20")
+        return v
+
+
+class LiquidityFilters(BaseModel):
+    """Liquidity filtering configuration."""
+    
+    min_24h_volume_usd: float = Field(..., description="Minimum 24h volume in USD")
+    min_oi_usd: Optional[float] = Field(None, description="Minimum open interest in USD")
+    max_spread_bps: float = Field(..., description="Maximum spread in basis points")
+    min_depth_usd_0_5pct: float = Field(..., description="Minimum depth at 0.5% in USD")
+    min_depth_usd_0_3pct: float = Field(..., description="Minimum depth at 0.3% in USD")
+    min_trades_per_minute: float = Field(..., description="Minimum trades per minute")
+    
+    @field_validator('min_24h_volume_usd', 'min_depth_usd_0_5pct', 'min_depth_usd_0_3pct')
+    @classmethod
+    def validate_positive_values(cls, v: float) -> float:
+        """Validate values are positive."""
+        if v <= 0:
+            raise ValueError("Values must be positive")
+        return v
+
+
+class VolatilityFilters(BaseModel):
+    """Volatility quality filtering configuration."""
+    
+    atr_range_min: float = Field(..., description="Minimum ATR/Price ratio")
+    atr_range_max: float = Field(..., description="Maximum ATR/Price ratio")
+    bb_width_percentile_max: float = Field(..., description="Maximum BB width percentile")
+    volume_surge_1h_min: float = Field(..., description="Minimum 1h volume surge")
+    volume_surge_5m_min: float = Field(..., description="Minimum 5m volume surge")
+    oi_delta_threshold: Optional[float] = Field(None, description="OI delta threshold")
+    
+    @field_validator('atr_range_min', 'atr_range_max')
+    @classmethod
+    def validate_atr_range(cls, v: float, info) -> float:
+        """Validate ATR range values."""
+        if v <= 0:
+            raise ValueError("ATR range values must be positive")
+        return v
+    
+    @field_validator('atr_range_max')
+    @classmethod
+    def validate_atr_range_max(cls, v: float, info) -> float:
+        """Validate ATR max is greater than min."""
+        if info.data and 'atr_range_min' in info.data and v < info.data['atr_range_min']:
+            raise ValueError("ATR max must be greater than min")
+        return v
+
+
+class SignalConfig(BaseModel):
+    """Signal generation configuration."""
+    
+    momentum_volume_multiplier: float = Field(..., description="Volume multiplier for momentum signals")
+    momentum_body_ratio_min: float = Field(..., description="Minimum body ratio for momentum")
+    momentum_epsilon: float = Field(..., description="Breakout epsilon for momentum")
+    retest_pierce_tolerance: float = Field(..., description="Pierce tolerance for retest")
+    retest_max_pierce_atr: float = Field(..., description="Max pierce in ATR multiples")
+    l2_imbalance_threshold: float = Field(..., description="L2 imbalance threshold")
+    vwap_gap_max_atr: float = Field(..., description="Max VWAP gap in ATR multiples")
+    
+    # New fields for enhanced signals
+    prelevel_limit_offset_bps: float = Field(default=2.0, description="Limit order offset before level in bps")
+    enter_on_density_eat_ratio: float = Field(default=0.75, description="Density eaten ratio to trigger entry")
+    tpm_on_touch_frac: float = Field(default=0.7, description="TPM fraction vs 1h avg for retest entry")
+    
+    # New configuration submodels - must be defined after the classes above
+    entry_rules: Optional["EntryRulesConfig"] = Field(
+        default=None,
+        description="Entry validation rules (optional for backward compatibility)"
+    )
+    market_quality: Optional["MarketQualityConfig"] = Field(
+        default=None,
+        description="Market quality filters (optional for backward compatibility)"
+    )
+    
+    @field_validator('momentum_body_ratio_min')
+    @classmethod
+    def validate_body_ratio(cls, v: float) -> float:
+        """Validate body ratio is between 0 and 1."""
+        if not 0 <= v <= 1:
+            raise ValueError("Body ratio must be between 0 and 1")
+        return v
+    
+    def get_entry_rules(self) -> "EntryRulesConfig":
+        """Get entry rules config with defaults."""
+        return self.entry_rules or EntryRulesConfig()
+    
+    def get_market_quality(self) -> "MarketQualityConfig":
+        """Get market quality config with defaults."""
+        return self.market_quality or MarketQualityConfig()
+
+
+class TakeProfitSmartPlacement(BaseModel):
+    """Configuration for smart TP placement using L2 data and levels."""
+    
+    enabled: bool = Field(default=True, description="Enable smart TP placement")
+    
+    # Avoid cluster zones
+    avoid_density_zones: bool = Field(
+        default=True,
+        description="Avoid placing TP in high-density zones"
+    )
+    density_zone_buffer_bps: float = Field(
+        default=10.0,
+        description="Buffer around density zones in basis points"
+    )
+    
+    # Avoid support/resistance levels
+    avoid_sr_levels: bool = Field(
+        default=True,
+        description="Avoid placing TP near support/resistance levels"
+    )
+    sr_level_buffer_bps: float = Field(
+        default=15.0,
+        description="Buffer around S/R levels in basis points"
+    )
+    
+    # Target round numbers
+    prefer_round_numbers: bool = Field(
+        default=True,
+        description="Prefer round number prices for TP"
+    )
+    round_number_step: float = Field(
+        default=0.10,
+        description="Round number step to target"
+    )
+    
+    # Maximum adjustment
+    max_adjustment_bps: float = Field(
+        default=20.0,
+        description="Maximum TP adjustment from base R:R"
+    )
+    
+    @field_validator('density_zone_buffer_bps', 'sr_level_buffer_bps', 'max_adjustment_bps')
+    @classmethod
+    def validate_bps(cls, v: float) -> float:
+        if v < 0:
+            raise ValueError("Buffer/adjustment must be non-negative")
+        return v
+
+
+class ExitRulesConfig(BaseModel):
+    """Configuration for exit rules and conditions."""
+    
+    # Failed breakout detection
+    failed_breakout_enabled: bool = Field(
+        default=True,
+        description="Enable failed breakout exit"
+    )
+    failed_breakout_bars: int = Field(
+        default=3,
+        description="Bars after entry to check for failed breakout"
+    )
+    failed_breakout_retest_threshold: float = Field(
+        default=0.5,
+        description="Threshold for level retest (0.0-1.0)"
+    )
+    
+    # Activity drop exit
+    activity_drop_enabled: bool = Field(
+        default=True,
+        description="Enable activity drop exit"
+    )
+    activity_drop_threshold: float = Field(
+        default=0.3,
+        description="Activity drop threshold (0.0-1.0)"
+    )
+    activity_drop_window_bars: int = Field(
+        default=5,
+        description="Bars to measure activity drop"
+    )
+    
+    # Weak impulse exit
+    weak_impulse_enabled: bool = Field(
+        default=True,
+        description="Enable weak impulse exit"
+    )
+    weak_impulse_min_move_pct: float = Field(
+        default=0.3,
+        description="Minimum move % expected after breakout"
+    )
+    weak_impulse_check_bars: int = Field(
+        default=5,
+        description="Bars to check for weak impulse"
+    )
+    
+    # Time-based exits
+    max_hold_time_hours: Optional[float] = Field(
+        default=None,
+        description="Maximum position hold time in hours"
+    )
+    time_stop_minutes: Optional[int] = Field(
+        default=None,
+        description="Time-based stop in minutes"
+    )
+    
+    # Volatility-based exit
+    volatility_exit_enabled: bool = Field(
+        default=False,
+        description="Enable volatility spike exit"
+    )
+    volatility_spike_threshold: float = Field(
+        default=3.0,
+        description="Volatility spike threshold (sigma)"
+    )
+    
+    @field_validator('failed_breakout_bars', 'activity_drop_window_bars', 'weak_impulse_check_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("Bar count must be at least 1")
+        return v
+    
+    @field_validator('failed_breakout_retest_threshold', 'activity_drop_threshold')
+    @classmethod
+    def validate_threshold(cls, v: float) -> float:
+        if not 0 <= v <= 1:
+            raise ValueError("Threshold must be between 0 and 1")
+        return v
+
+
+class FSMConfig(BaseModel):
+    """Configuration for position finite state machine."""
+    
+    enabled: bool = Field(default=True, description="Enable FSM-based position management")
+    
+    # State: ENTRY
+    entry_confirmation_bars: int = Field(
+        default=2,
+        description="Bars to confirm entry before moving to RUNNING"
+    )
+    entry_max_slippage_bps: float = Field(
+        default=10.0,
+        description="Maximum allowed slippage during entry"
+    )
+    
+    # State: RUNNING
+    running_monitor_interval_s: int = Field(
+        default=5,
+        description="Monitoring interval in RUNNING state"
+    )
+    running_breakeven_trigger_r: float = Field(
+        default=1.0,
+        description="R:R to trigger breakeven SL"
+    )
+    
+    # State: PARTIAL_CLOSED
+    partial_closed_trail_enabled: bool = Field(
+        default=True,
+        description="Enable trailing stop after partial close"
+    )
+    partial_closed_trail_trigger_r: float = Field(
+        default=2.0,
+        description="R:R to start trailing after partial close"
+    )
+    partial_closed_trail_step_bps: float = Field(
+        default=20.0,
+        description="Trailing step in basis points"
+    )
+    
+    # State: BREAKEVEN
+    breakeven_buffer_bps: float = Field(
+        default=5.0,
+        description="Buffer above entry for breakeven SL"
+    )
+    breakeven_lock_profit_enabled: bool = Field(
+        default=True,
+        description="Lock small profit instead of true breakeven"
+    )
+    breakeven_lock_profit_bps: float = Field(
+        default=10.0,
+        description="Profit to lock in breakeven state"
+    )
+    
+    # State: TRAILING
+    trailing_activation_r: float = Field(
+        default=2.0,
+        description="R:R to activate trailing stop"
+    )
+    trailing_step_bps: float = Field(
+        default=20.0,
+        description="Trailing step in basis points"
+    )
+    trailing_acceleration_enabled: bool = Field(
+        default=True,
+        description="Enable trailing acceleration"
+    )
+    trailing_accel_after_r: float = Field(
+        default=4.0,
+        description="R:R to accelerate trailing"
+    )
+    trailing_accel_step_bps: float = Field(
+        default=10.0,
+        description="Accelerated trailing step"
+    )
+    
+    # State: EXITING
+    exiting_timeout_s: int = Field(
+        default=30,
+        description="Timeout for exit execution"
+    )
+    exiting_panic_after_attempts: int = Field(
+        default=3,
+        description="Panic exit after failed attempts"
+    )
+    
+    @field_validator('entry_confirmation_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("entry_confirmation_bars must be at least 1")
+        return v
+    
+    @field_validator('entry_max_slippage_bps', 'partial_closed_trail_step_bps', 
+                     'breakeven_buffer_bps', 'breakeven_lock_profit_bps',
+                     'trailing_step_bps', 'trailing_accel_step_bps')
+    @classmethod
+    def validate_bps(cls, v: float) -> float:
+        if v < 0:
+            raise ValueError("BPS values must be non-negative")
+        return v
+
+
+class EntryRulesConfig(BaseModel):
+    """Configuration for entry validation and safety rules."""
+    
+    # Entry confirmation requirements
+    require_volume_confirmation: bool = Field(
+        default=True,
+        description="Require volume spike on breakout"
+    )
+    volume_confirmation_multiplier: float = Field(
+        default=1.5,
+        description="Volume multiplier vs average"
+    )
+    
+    require_density_confirmation: bool = Field(
+        default=True,
+        description="Require density breakout confirmation"
+    )
+    density_confirmation_threshold: float = Field(
+        default=2.0,
+        description="Density threshold multiplier"
+    )
+    
+    # Momentum requirements
+    require_momentum: bool = Field(
+        default=True,
+        description="Require momentum confirmation"
+    )
+    momentum_min_slope_pct: float = Field(
+        default=0.5,
+        description="Minimum price slope % per bar"
+    )
+    momentum_check_bars: int = Field(
+        default=3,
+        description="Bars to check momentum"
+    )
+    
+    # Level approach validation
+    validate_approach: bool = Field(
+        default=True,
+        description="Validate level approach quality"
+    )
+    approach_max_slope_pct: float = Field(
+        default=1.5,
+        description="Maximum approach slope % per bar"
+    )
+    approach_min_consolidation_bars: int = Field(
+        default=3,
+        description="Minimum consolidation before breakout"
+    )
+    
+    # Safety filters
+    max_distance_from_level_bps: float = Field(
+        default=30.0,
+        description="Max distance from level for valid entry"
+    )
+    require_clean_breakout: bool = Field(
+        default=True,
+        description="Require clean breakout (no false starts)"
+    )
+    false_start_lookback_bars: int = Field(
+        default=10,
+        description="Bars to check for false starts"
+    )
+    
+    # Time-based filters
+    avoid_session_start_minutes: int = Field(
+        default=5,
+        description="Avoid entries in first N minutes of session"
+    )
+    avoid_session_end_minutes: int = Field(
+        default=15,
+        description="Avoid entries in last N minutes of session"
+    )
+    
+    @field_validator('volume_confirmation_multiplier', 'density_confirmation_threshold')
+    @classmethod
+    def validate_multiplier(cls, v: float) -> float:
+        if v < 1.0:
+            raise ValueError("Confirmation multiplier must be >= 1.0")
+        return v
+    
+    @field_validator('momentum_check_bars', 'approach_min_consolidation_bars', 
+                     'false_start_lookback_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("Bar count must be at least 1")
+        return v
+
+
+class MarketQualityConfig(BaseModel):
+    """Configuration for market quality and consolidation filters."""
+    
+    # Flat market detection
+    flat_market_filter_enabled: bool = Field(
+        default=True,
+        description="Enable flat market filter"
+    )
+    flat_market_atr_threshold: float = Field(
+        default=0.3,
+        description="ATR threshold for flat market (% of price)"
+    )
+    flat_market_lookback_bars: int = Field(
+        default=20,
+        description="Bars to check for flat market"
+    )
+    
+    # Consolidation detection
+    consolidation_filter_enabled: bool = Field(
+        default=True,
+        description="Enable consolidation filter"
+    )
+    consolidation_range_threshold_pct: float = Field(
+        default=0.5,
+        description="Price range threshold for consolidation (%)"
+    )
+    consolidation_min_bars: int = Field(
+        default=10,
+        description="Minimum bars to detect consolidation"
+    )
+    
+    # Volatility quality
+    require_stable_volatility: bool = Field(
+        default=True,
+        description="Require stable volatility (no spikes)"
+    )
+    volatility_spike_threshold: float = Field(
+        default=2.0,
+        description="Volatility spike threshold (sigma)"
+    )
+    volatility_lookback_bars: int = Field(
+        default=20,
+        description="Bars for volatility stability check"
+    )
+    
+    # Trend quality
+    require_clear_trend: bool = Field(
+        default=False,
+        description="Require clear trend direction"
+    )
+    trend_slope_min_pct: float = Field(
+        default=0.3,
+        description="Minimum trend slope % per bar"
+    )
+    trend_lookback_bars: int = Field(
+        default=20,
+        description="Bars to detect trend"
+    )
+    
+    # Market noise filter
+    noise_filter_enabled: bool = Field(
+        default=True,
+        description="Enable market noise filter"
+    )
+    noise_threshold: float = Field(
+        default=0.7,
+        description="Noise threshold (0.0-1.0)"
+    )
+    
+    @field_validator('flat_market_lookback_bars', 'consolidation_min_bars',
+                     'volatility_lookback_bars', 'trend_lookback_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("Bar count must be at least 1")
+        return v
+    
+    @field_validator('flat_market_atr_threshold', 'consolidation_range_threshold_pct')
+    @classmethod
+    def validate_threshold(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("Threshold must be positive")
+        return v
+    
+    @field_validator('noise_threshold')
+    @classmethod
+    def validate_noise(cls, v: float) -> float:
+        if not 0 <= v <= 1:
+            raise ValueError("noise_threshold must be between 0 and 1")
+        return v
+
+
+class PositionConfig(BaseModel):
+    """Position management configuration with flexible multi-level TP system."""
+    
+    # Legacy fields for backward compatibility (will be deprecated)
+    tp1_r: Optional[float] = Field(None, description="[LEGACY] First take profit in R multiples")
+    tp1_size_pct: Optional[float] = Field(None, description="[LEGACY] First TP size percentage")
+    tp2_r: Optional[float] = Field(None, description="[LEGACY] Second take profit in R multiples")
+    tp2_size_pct: Optional[float] = Field(None, description="[LEGACY] Second TP size percentage")
+    
+    # New flexible TP system
+    tp_levels: List[TakeProfitLevel] = Field(
+        default_factory=list,
+        description="Flexible take profit levels (supports 2-6 levels)"
+    )
+    tp_smart_placement: TakeProfitSmartPlacement = Field(
+        default_factory=TakeProfitSmartPlacement,
+        description="Smart TP placement configuration"
+    )
+    
+    # Stop loss configuration
+    sl_mode: str = Field(
+        default="fixed",
+        description="SL mode: 'fixed', 'chandelier', 'atr'"
+    )
+    sl_r: float = Field(
+        default=1.0,
+        description="Stop loss in R multiples (for fixed mode)"
+    )
+    chandelier_atr_mult: float = Field(
+        default=3.0,
+        description="Chandelier exit ATR multiplier"
+    )
+    chandelier_lookback_bars: int = Field(
+        default=22,
+        description="Chandelier lookback period"
+    )
+    
+    # Breakeven configuration
+    breakeven_enabled: bool = Field(
+        default=True,
+        description="Enable breakeven SL move"
+    )
+    breakeven_trigger_r: float = Field(
+        default=1.0,
+        description="R:R to trigger breakeven"
+    )
+    breakeven_buffer_bps: float = Field(
+        default=5.0,
+        description="Buffer above entry for breakeven SL"
+    )
+    
+    # Trailing stop configuration
+    trailing_enabled: bool = Field(
+        default=True,
+        description="Enable trailing stop"
+    )
+    trailing_activation_r: float = Field(
+        default=2.0,
+        description="R:R to activate trailing"
+    )
+    trailing_step_bps: float = Field(
+        default=20.0,
+        description="Trailing step in basis points"
+    )
+    
+    # Exit rules
+    exit_rules: ExitRulesConfig = Field(
+        default_factory=ExitRulesConfig,
+        description="Exit rules configuration"
+    )
+    
+    # FSM configuration
+    fsm_config: FSMConfig = Field(
+        default_factory=FSMConfig,
+        description="Position FSM configuration"
+    )
+    
+    # Position sizing
+    max_hold_time_hours: int = Field(
+        default=24,
+        description="Maximum hold time in hours"
+    )
+    add_on_enabled: bool = Field(
+        default=False,
+        description="Enable add-on positions"
+    )
+    add_on_max_size_pct: float = Field(
+        default=0.5,
+        description="Maximum add-on size percentage"
+    )
+    
+    # Legacy fields
+    time_stop_minutes: Optional[int] = Field(
+        default=None,
+        description="[LEGACY] Time-based stop in minutes"
+    )
+    panic_exit_on_activity_drop: bool = Field(
+        default=False,
+        description="[LEGACY] Exit on activity drop"
+    )
+    activity_drop_threshold: float = Field(
+        default=0.4,
+        description="[LEGACY] Activity drop threshold"
+    )
+    
+    @field_validator('tp_levels')
+    @classmethod
+    def validate_tp_levels(cls, v: List[TakeProfitLevel]) -> List[TakeProfitLevel]:
+        """Validate TP levels configuration."""
+        if not v:
+            return v  # Allow empty for backward compatibility
+        
+        if len(v) < 2 or len(v) > 6:
+            raise ValueError("Must have 2-6 TP levels")
+        
+        # Check total size is <= 100%
+        total_size = sum(level.size_pct for level in v)
+        if total_size > 1.0:
+            raise ValueError(f"Total TP size {total_size*100:.1f}% exceeds 100%")
+        
+        # Check R:R multiples are increasing
+        for i in range(1, len(v)):
+            if v[i].reward_multiple <= v[i-1].reward_multiple:
+                raise ValueError(f"{v[i].level_name} R:R must be > {v[i-1].level_name} R:R")
+        
+        return v
+    
+    @field_validator('sl_mode')
+    @classmethod
+    def validate_sl_mode(cls, v: str) -> str:
+        allowed = {'fixed', 'chandelier', 'atr'}
+        if v not in allowed:
+            raise ValueError(f"sl_mode must be one of {allowed}")
+        return v
+    
+    @field_validator('sl_r', 'chandelier_atr_mult')
+    @classmethod
+    def validate_positive(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("Value must be positive")
+        return v
+    
+    @field_validator('add_on_max_size_pct')
+    @classmethod
+    def validate_add_on_percentage(cls, v: float) -> float:
+        if not 0 <= v <= 1:
+            raise ValueError("Add-on percentage must be between 0 and 1")
+        return v
+    
+    def get_tp_levels(self) -> List[TakeProfitLevel]:
+        """Get TP levels, falling back to legacy if needed."""
+        if self.tp_levels:
+            return self.tp_levels
+        
+        # Backward compatibility: convert legacy fields
+        if self.tp1_r and self.tp2_r:
+            return [
+                TakeProfitLevel(
+                    level_name="TP1",
+                    reward_multiple=self.tp1_r,
+                    size_pct=self.tp1_size_pct or 0.5,
+                    placement_mode="fixed"
+                ),
+                TakeProfitLevel(
+                    level_name="TP2",
+                    reward_multiple=self.tp2_r,
+                    size_pct=self.tp2_size_pct or 0.5,
+                    placement_mode="fixed"
+                )
+            ]
+        
+        return []
+
+
+class ScannerConfig(BaseModel):
+    """Scanner configuration."""
+    
+    max_candidates: int = Field(..., description="Maximum candidates to return")
+    scan_interval_seconds: int = Field(..., description="Scan interval in seconds")
+    score_weights: Dict[str, float] = Field(..., description="Scoring weights")
+    symbol_whitelist: Optional[List[str]] = Field(None, description="Symbol whitelist")
+    symbol_blacklist: Optional[List[str]] = Field(None, description="Symbol blacklist")
+    top_n_by_volume: Optional[int] = Field(None, description="Top N symbols by volume")
+    
+    @field_validator('max_candidates', 'scan_interval_seconds')
+    @classmethod
+    def validate_positive_ints(cls, v: int) -> int:
+        """Validate positive integers."""
+        if v <= 0:
+            raise ValueError("Values must be positive")
+        return v
+    
+    @field_validator('score_weights')
+    @classmethod
+    def validate_weights_sum(cls, v: Dict[str, float]) -> Dict[str, float]:
+        """Validate scoring weights."""
+        total = sum(abs(weight) for weight in v.values())
+        if not 0.8 <= total <= 1.2:  # Allow some tolerance
+            raise ValueError("Score weights should sum to approximately 1.0")
+        return v
+
+
+class ExecutionConfig(BaseModel):
+    """Execution and microstructure configuration."""
+
+    enable_twap: bool = Field(default=True, description="Enable TWAP-style slicing for large orders")
+    enable_iceberg: bool = Field(default=True, description="Enable iceberg execution when depth limits breached")
+    max_depth_fraction: float = Field(
+        default=0.25,
+        description="Maximum fraction of 0.3% depth consumed by a single slice"
+    )
+    twap_min_slices: int = Field(default=3, description="Minimum number of slices for TWAP execution")
+    twap_max_slices: int = Field(default=12, description="Maximum number of slices for TWAP execution")
+    twap_interval_seconds: float = Field(default=3.0, description="Delay between slices in seconds")
+    iceberg_min_notional: float = Field(default=3000.0, description="Minimum notional per iceberg child order")
+    limit_offset_bps: float = Field(
+        default=2.0,
+        description="Price offset in basis points for passive limit orders when possible"
+    )
+    spread_widen_bps: float = Field(
+        default=12.0,
+        description="Maximum spread in basis points before cancelling execution"
+    )
+    deadman_timeout_ms: int = Field(default=10000, description="Deadman switch timeout for execution loops")
+    taker_fee_bps: float = Field(default=7.5, description="Assumed taker fee in basis points")
+    maker_fee_bps: float = Field(default=2.0, description="Assumed maker rebate/fee in basis points")
+
+    @field_validator('max_depth_fraction')
+    @classmethod
+    def validate_depth_fraction(cls, v: float) -> float:
+        if not 0 < v <= 1:
+            raise ValueError("max_depth_fraction must be between 0 and 1")
+        return v
+
+    @field_validator('twap_min_slices', 'twap_max_slices')
+    @classmethod
+    def validate_slice_counts(cls, v: int) -> int:
+        if v < 1 or v > 50:
+            raise ValueError("TWAP slices must be between 1 and 50")
+        return v
+
+    @field_validator('twap_interval_seconds')
+    @classmethod
+    def validate_interval(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("TWAP interval must be positive")
+        return v
+
+    @field_validator('iceberg_min_notional')
+    @classmethod
+    def validate_iceberg_notional(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("Iceberg minimum notional must be positive")
+        return v
+
+    @field_validator('limit_offset_bps', 'spread_widen_bps', 'taker_fee_bps', 'maker_fee_bps')
+    @classmethod
+    def validate_bps(cls, v: float) -> float:
+        if v < 0:
+            raise ValueError("Basis point settings must be non-negative")
+        return v
+
+    @field_validator('twap_max_slices')
+    @classmethod
+    def validate_slice_relationship(cls, v: int, info) -> int:
+        if info.data and 'twap_min_slices' in info.data:
+            min_slices = info.data['twap_min_slices']
+            if v < min_slices:
+                raise ValueError("twap_max_slices must be >= twap_min_slices")
+        return v
+
+
+class LevelsRules(BaseModel):
+    """Level detection rules configuration."""
+    
+    min_touches: int = Field(default=2, description="Minimum touches for valid level")
+    prefer_round_numbers: bool = Field(default=True, description="Give bonus to round numbers")
+    round_step_candidates: List[float] = Field(
+        default=[0.01, 0.05, 0.10, 1.00, 5.00, 10.00],
+        description="Round step candidates for detection"
+    )
+    cascade_min_levels: int = Field(default=2, description="Minimum levels for cascade")
+    cascade_radius_bps: float = Field(default=15.0, description="Cascade radius in basis points")
+    approach_slope_max_pct_per_bar: float = Field(default=1.5, description="Max approach slope %/bar")
+    prebreakout_consolidation_min_bars: int = Field(default=3, description="Min consolidation bars")
+    
+    @field_validator('min_touches')
+    @classmethod
+    def validate_min_touches(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("min_touches must be at least 1")
+        return v
+
+
+class DensityConfig(BaseModel):
+    """Density detection configuration."""
+    
+    k_density: float = Field(default=7.0, description="Density threshold multiplier")
+    bucket_ticks: int = Field(default=3, description="Number of ticks per bucket")
+    lookback_window_s: int = Field(default=300, description="Lookback window in seconds")
+    
+    @field_validator('k_density')
+    @classmethod
+    def validate_k_density(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("k_density must be positive")
+        return v
+
+
+class TakeProfitLevel(BaseModel):
+    """Configuration for a single take profit level."""
+    
+    level_name: str = Field(..., description="Level identifier (TP1, TP2, TP3, TP4)")
+    reward_multiple: float = Field(..., description="R:R ratio for this level")
+    size_pct: float = Field(..., description="Percentage of position to close (0.0-1.0)")
+    placement_mode: str = Field(
+        default="fixed",
+        description="Placement mode: 'fixed', 'smart', 'adaptive'"
+    )
+    
+    @field_validator('reward_multiple')
+    @classmethod
+    def validate_reward(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("reward_multiple must be positive")
+        return v
+    
+    @field_validator('size_pct')
+    @classmethod
+    def validate_size(cls, v: float) -> float:
+        if not 0 < v <= 1:
+            raise ValueError("size_pct must be between 0 and 1")
+        return v
+    
+    @field_validator('placement_mode')
+    @classmethod
+    def validate_mode(cls, v: str) -> str:
+        allowed = {'fixed', 'smart', 'adaptive'}
+        if v not in allowed:
+            raise ValueError(f"placement_mode must be one of {allowed}")
+        return v
+
+
+class TakeProfitSmartPlacement(BaseModel):
+    """Configuration for smart TP placement using L2 data and levels."""
+    
+    enabled: bool = Field(default=True, description="Enable smart TP placement")
+    
+    # Avoid cluster zones
+    avoid_density_zones: bool = Field(
+        default=True,
+        description="Avoid placing TP in high-density zones"
+    )
+    density_zone_buffer_bps: float = Field(
+        default=10.0,
+        description="Buffer around density zones in basis points"
+    )
+    
+    # Avoid support/resistance levels
+    avoid_sr_levels: bool = Field(
+        default=True,
+        description="Avoid placing TP near support/resistance levels"
+    )
+    sr_level_buffer_bps: float = Field(
+        default=15.0,
+        description="Buffer around S/R levels in basis points"
+    )
+    
+    # Target round numbers
+    prefer_round_numbers: bool = Field(
+        default=True,
+        description="Prefer round number prices for TP"
+    )
+    round_number_step: float = Field(
+        default=0.10,
+        description="Round number step to target"
+    )
+    
+    # Maximum adjustment
+    max_adjustment_bps: float = Field(
+        default=20.0,
+        description="Maximum TP adjustment from base R:R"
+    )
+    
+    @field_validator('density_zone_buffer_bps', 'sr_level_buffer_bps', 'max_adjustment_bps')
+    @classmethod
+    def validate_bps(cls, v: float) -> float:
+        if v < 0:
+            raise ValueError("Buffer/adjustment must be non-negative")
+        return v
+
+
+class ExitRulesConfig(BaseModel):
+    """Configuration for exit rules and conditions."""
+    
+    # Failed breakout detection
+    failed_breakout_enabled: bool = Field(
+        default=True,
+        description="Enable failed breakout exit"
+    )
+    failed_breakout_bars: int = Field(
+        default=3,
+        description="Bars after entry to check for failed breakout"
+    )
+    failed_breakout_retest_threshold: float = Field(
+        default=0.5,
+        description="Threshold for level retest (0.0-1.0)"
+    )
+    
+    # Activity drop exit
+    activity_drop_enabled: bool = Field(
+        default=True,
+        description="Enable activity drop exit"
+    )
+    activity_drop_threshold: float = Field(
+        default=0.3,
+        description="Activity drop threshold (0.0-1.0)"
+    )
+    activity_drop_window_bars: int = Field(
+        default=5,
+        description="Bars to measure activity drop"
+    )
+    
+    # Weak impulse exit
+    weak_impulse_enabled: bool = Field(
+        default=True,
+        description="Enable weak impulse exit"
+    )
+    weak_impulse_min_move_pct: float = Field(
+        default=0.3,
+        description="Minimum move % expected after breakout"
+    )
+    weak_impulse_check_bars: int = Field(
+        default=5,
+        description="Bars to check for weak impulse"
+    )
+    
+    # Time-based exits
+    max_hold_time_hours: Optional[float] = Field(
+        default=None,
+        description="Maximum position hold time in hours"
+    )
+    time_stop_minutes: Optional[int] = Field(
+        default=None,
+        description="Time-based stop in minutes"
+    )
+    
+    # Volatility-based exit
+    volatility_exit_enabled: bool = Field(
+        default=False,
+        description="Enable volatility spike exit"
+    )
+    volatility_spike_threshold: float = Field(
+        default=3.0,
+        description="Volatility spike threshold (sigma)"
+    )
+    
+    @field_validator('failed_breakout_bars', 'activity_drop_window_bars', 'weak_impulse_check_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("Bar count must be at least 1")
+        return v
+    
+    @field_validator('failed_breakout_retest_threshold', 'activity_drop_threshold')
+    @classmethod
+    def validate_threshold(cls, v: float) -> float:
+        if not 0 <= v <= 1:
+            raise ValueError("Threshold must be between 0 and 1")
+        return v
+
+
+class FSMConfig(BaseModel):
+    """Configuration for position finite state machine."""
+    
+    enabled: bool = Field(default=True, description="Enable FSM-based position management")
+    
+    # State: ENTRY
+    entry_confirmation_bars: int = Field(
+        default=2,
+        description="Bars to confirm entry before moving to RUNNING"
+    )
+    entry_max_slippage_bps: float = Field(
+        default=10.0,
+        description="Maximum allowed slippage during entry"
+    )
+    
+    # State: RUNNING
+    running_monitor_interval_s: int = Field(
+        default=5,
+        description="Monitoring interval in RUNNING state"
+    )
+    running_breakeven_trigger_r: float = Field(
+        default=1.0,
+        description="R:R to trigger breakeven SL"
+    )
+    
+    # State: PARTIAL_CLOSED
+    partial_closed_trail_enabled: bool = Field(
+        default=True,
+        description="Enable trailing stop after partial close"
+    )
+    partial_closed_trail_trigger_r: float = Field(
+        default=2.0,
+        description="R:R to start trailing after partial close"
+    )
+    partial_closed_trail_step_bps: float = Field(
+        default=20.0,
+        description="Trailing step in basis points"
+    )
+    
+    # State: BREAKEVEN
+    breakeven_buffer_bps: float = Field(
+        default=5.0,
+        description="Buffer above entry for breakeven SL"
+    )
+    breakeven_lock_profit_enabled: bool = Field(
+        default=True,
+        description="Lock small profit instead of true breakeven"
+    )
+    breakeven_lock_profit_bps: float = Field(
+        default=10.0,
+        description="Profit to lock in breakeven state"
+    )
+    
+    # State: TRAILING
+    trailing_activation_r: float = Field(
+        default=2.0,
+        description="R:R to activate trailing stop"
+    )
+    trailing_step_bps: float = Field(
+        default=20.0,
+        description="Trailing step in basis points"
+    )
+    trailing_acceleration_enabled: bool = Field(
+        default=True,
+        description="Enable trailing acceleration"
+    )
+    trailing_accel_after_r: float = Field(
+        default=4.0,
+        description="R:R to accelerate trailing"
+    )
+    trailing_accel_step_bps: float = Field(
+        default=10.0,
+        description="Accelerated trailing step"
+    )
+    
+    # State: EXITING
+    exiting_timeout_s: int = Field(
+        default=30,
+        description="Timeout for exit execution"
+    )
+    exiting_panic_after_attempts: int = Field(
+        default=3,
+        description="Panic exit after failed attempts"
+    )
+    
+    @field_validator('entry_confirmation_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("entry_confirmation_bars must be at least 1")
+        return v
+    
+    @field_validator('entry_max_slippage_bps', 'partial_closed_trail_step_bps', 
+                     'breakeven_buffer_bps', 'breakeven_lock_profit_bps',
+                     'trailing_step_bps', 'trailing_accel_step_bps')
+    @classmethod
+    def validate_bps(cls, v: float) -> float:
+        if v < 0:
+            raise ValueError("BPS values must be non-negative")
+        return v
+
+
+class EntryRulesConfig(BaseModel):
+    """Configuration for entry validation and safety rules."""
+    
+    # Entry confirmation requirements
+    require_volume_confirmation: bool = Field(
+        default=True,
+        description="Require volume spike on breakout"
+    )
+    volume_confirmation_multiplier: float = Field(
+        default=1.5,
+        description="Volume multiplier vs average"
+    )
+    
+    require_density_confirmation: bool = Field(
+        default=True,
+        description="Require density breakout confirmation"
+    )
+    density_confirmation_threshold: float = Field(
+        default=2.0,
+        description="Density threshold multiplier"
+    )
+    
+    # Momentum requirements
+    require_momentum: bool = Field(
+        default=True,
+        description="Require momentum confirmation"
+    )
+    momentum_min_slope_pct: float = Field(
+        default=0.5,
+        description="Minimum price slope % per bar"
+    )
+    momentum_check_bars: int = Field(
+        default=3,
+        description="Bars to check momentum"
+    )
+    
+    # Level approach validation
+    validate_approach: bool = Field(
+        default=True,
+        description="Validate level approach quality"
+    )
+    approach_max_slope_pct: float = Field(
+        default=1.5,
+        description="Maximum approach slope % per bar"
+    )
+    approach_min_consolidation_bars: int = Field(
+        default=3,
+        description="Minimum consolidation before breakout"
+    )
+    
+    # Safety filters
+    max_distance_from_level_bps: float = Field(
+        default=30.0,
+        description="Max distance from level for valid entry"
+    )
+    require_clean_breakout: bool = Field(
+        default=True,
+        description="Require clean breakout (no false starts)"
+    )
+    false_start_lookback_bars: int = Field(
+        default=10,
+        description="Bars to check for false starts"
+    )
+    
+    # Time-based filters
+    avoid_session_start_minutes: int = Field(
+        default=5,
+        description="Avoid entries in first N minutes of session"
+    )
+    avoid_session_end_minutes: int = Field(
+        default=15,
+        description="Avoid entries in last N minutes of session"
+    )
+    
+    @field_validator('volume_confirmation_multiplier', 'density_confirmation_threshold')
+    @classmethod
+    def validate_multiplier(cls, v: float) -> float:
+        if v < 1.0:
+            raise ValueError("Confirmation multiplier must be >= 1.0")
+        return v
+    
+    @field_validator('momentum_check_bars', 'approach_min_consolidation_bars', 
+                     'false_start_lookback_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("Bar count must be at least 1")
+        return v
+
+
+class MarketQualityConfig(BaseModel):
+    """Configuration for market quality and consolidation filters."""
+    
+    # Flat market detection
+    flat_market_filter_enabled: bool = Field(
+        default=True,
+        description="Enable flat market filter"
+    )
+    flat_market_atr_threshold: float = Field(
+        default=0.3,
+        description="ATR threshold for flat market (% of price)"
+    )
+    flat_market_lookback_bars: int = Field(
+        default=20,
+        description="Bars to check for flat market"
+    )
+    
+    # Consolidation detection
+    consolidation_filter_enabled: bool = Field(
+        default=True,
+        description="Enable consolidation filter"
+    )
+    consolidation_range_threshold_pct: float = Field(
+        default=0.5,
+        description="Price range threshold for consolidation (%)"
+    )
+    consolidation_min_bars: int = Field(
+        default=10,
+        description="Minimum bars to detect consolidation"
+    )
+    
+    # Volatility quality
+    require_stable_volatility: bool = Field(
+        default=True,
+        description="Require stable volatility (no spikes)"
+    )
+    volatility_spike_threshold: float = Field(
+        default=2.0,
+        description="Volatility spike threshold (sigma)"
+    )
+    volatility_lookback_bars: int = Field(
+        default=20,
+        description="Bars for volatility stability check"
+    )
+    
+    # Trend quality
+    require_clear_trend: bool = Field(
+        default=False,
+        description="Require clear trend direction"
+    )
+    trend_slope_min_pct: float = Field(
+        default=0.3,
+        description="Minimum trend slope % per bar"
+    )
+    trend_lookback_bars: int = Field(
+        default=20,
+        description="Bars to detect trend"
+    )
+    
+    # Market noise filter
+    noise_filter_enabled: bool = Field(
+        default=True,
+        description="Enable market noise filter"
+    )
+    noise_threshold: float = Field(
+        default=0.7,
+        description="Noise threshold (0.0-1.0)"
+    )
+    
+    @field_validator('flat_market_lookback_bars', 'consolidation_min_bars',
+                     'volatility_lookback_bars', 'trend_lookback_bars')
+    @classmethod
+    def validate_bars(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("Bar count must be at least 1")
+        return v
+    
+    @field_validator('flat_market_atr_threshold', 'consolidation_range_threshold_pct')
+    @classmethod
+    def validate_threshold(cls, v: float) -> float:
+        if v <= 0:
+            raise ValueError("Threshold must be positive")
+        return v
+    
+    @field_validator('noise_threshold')
+    @classmethod
+    def validate_noise(cls, v: float) -> float:
+        if not 0 <= v <= 1:
+            raise ValueError("noise_threshold must be between 0 and 1")
+        return v
+
+
+class TradingPreset(BaseModel):
+    """Complete trading preset configuration."""
+    
+    name: str = Field(..., description="Preset name")
+    description: str = Field(..., description="Preset description")
+    target_markets: str = Field(..., description="Target market description")
+    risk: RiskConfig = Field(..., description="Risk management config")
+    liquidity_filters: LiquidityFilters = Field(..., description="Liquidity filters")
+    volatility_filters: VolatilityFilters = Field(..., description="Volatility filters")
+    signal_config: SignalConfig = Field(..., description="Signal configuration")
+    position_config: PositionConfig = Field(..., description="Position management")
+    scanner_config: ScannerConfig = Field(..., description="Scanner configuration")
+    strategy_priority: str = Field(..., description="Primary strategy type")
+    execution_config: ExecutionConfig = Field(
+        default_factory=ExecutionConfig,
+        description="Execution and microstructure configuration"
+    )
+    
+    # New configs
+    levels_rules: LevelsRules = Field(
+        default_factory=LevelsRules,
+        description="Level detection rules"
+    )
+    density_config: DensityConfig = Field(
+        default_factory=DensityConfig,
+        description="Density detection configuration"
+    )
+
+
+class SystemConfig(BaseModel):
+    """System-wide configuration."""
+    
+    exchange: str = Field(default="bybit", description="Default exchange")
+    trading_mode: str = Field(default="paper", description="Trading mode: paper or live")
+    log_level: str = Field(default="INFO", description="Logging level")
+    log_to_file: bool = Field(default=True, description="Enable file logging")
+    database_url: str = Field(default="sqlite:///breakout_bot.db", description="Database URL")
+    paper_starting_balance: float = Field(default=100000.0, description="Paper trading balance")
+    paper_slippage_bps: float = Field(default=5.0, description="Paper trading slippage")
+    debug_diag: bool = Field(default=False, description="Enable enhanced diagnostics logging")
+    
+    @property
+    def paper_mode(self) -> bool:
+        """Check if running in paper mode."""
+        return self.trading_mode.lower() == "paper"
+    
+    @classmethod
+    def from_env(cls) -> "SystemConfig":
+        """Create system config from environment variables."""
+        return cls(
+            exchange=os.getenv("DEFAULT_EXCHANGE", "bybit"),
+            trading_mode=os.getenv("TRADING_MODE", "paper"),
+            log_level=os.getenv("LOG_LEVEL", "INFO"),
+            log_to_file=os.getenv("LOG_TO_FILE", "true").lower() == "true",
+            database_url=os.getenv("DATABASE_URL", "sqlite:///breakout_bot.db"),
+            paper_starting_balance=float(os.getenv("PAPER_STARTING_BALANCE", "100000")),
+            paper_slippage_bps=float(os.getenv("PAPER_SLIPPAGE_BPS", "5")),
+            debug_diag=os.getenv("DEBUG_DIAG", "0") not in {"0", "false", "False", ""},
+        )
+
+
+def load_preset(preset_name: str) -> TradingPreset:
+    """Load a trading preset from JSON configuration."""
+    config_path = Path(__file__).parent / "presets" / f"{preset_name}.json"
+    
+    if not config_path.exists():
+        raise ValueError(f"Preset '{preset_name}' not found at {config_path}")
+    
+    try:
+        with open(config_path, 'r') as f:
+            preset_data = json.load(f)
+        
+        return TradingPreset(**preset_data)
+    
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON in preset file: {e}")
+    except Exception as e:
+        raise ValueError(f"Error loading preset: {e}")
+
+
+def get_available_presets() -> List[str]:
+    """Get list of available preset names."""
+    presets_dir = Path(__file__).parent / "presets"
+    if not presets_dir.exists():
+        return []
+    
+    return [f.stem for f in presets_dir.glob("*.json")]
+
+
+def validate_preset(preset: TradingPreset) -> bool:
+    """Validate a trading preset configuration."""
+    try:
+        # Additional cross-field validation
+        if preset.risk.correlation_limit < 0 or preset.risk.correlation_limit > 1:
+            raise ValueError("Correlation limit must be between 0 and 1")
+        
+        if preset.position_config.tp1_r >= preset.position_config.tp2_r:
+            raise ValueError("TP2 must be greater than TP1")
+        
+        total_tp_size = (preset.position_config.tp1_size_pct + 
+                        preset.position_config.tp2_size_pct)
+        if total_tp_size > 1.0:
+            raise ValueError("Total TP size cannot exceed 100%")
+        
+        return True
+    
+    except Exception as e:
+        raise ValueError(f"Preset validation failed: {e}")
+
+
+def get_preset(preset_name: str) -> TradingPreset:
+    """Get and validate a trading preset."""
+    preset = load_preset(preset_name)
+    validate_preset(preset)
+    return preset
+
+
+class Settings:
+    """Main settings class for the application"""
+    
+    def __init__(self):
+        self.system = SystemConfig.from_env()
+        self.presets_dir = Path(__file__).parent / "presets"
+    
+    def get_preset(self, name: str) -> TradingPreset:
+        """Get a trading preset by name"""
+        return get_preset(name)
+    
+    def get_available_presets(self) -> List[str]:
+        """Get list of available presets"""
+        return get_available_presets()

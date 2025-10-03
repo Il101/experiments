@@ -1,0 +1,17 @@
+--- a/breakout_bot/scanner/market_scanner.py
++++ b/breakout_bot/scanner/market_scanner.py
+@@ -575,7 +575,7 @@ class BreakoutScanner:
+         # Calculate volume surge metrics
+         if len(candles_1h) >= 20:
+             volumes_1h = [c.volume for c in candles_1h]
+             current_vol_1h = volumes_1h[-1]
+-            avg_vol_1h = np.mean(volumes_1h[-20:-1])  # Last 20 bars excluding current
++            avg_vol_1h = np.median(volumes_1h[-20:-1])  # Use median for robustness to outliers
+             metrics.vol_surge_1h = current_vol_1h / avg_vol_1h if avg_vol_1h > 0 else 0.0
+         
+         if len(candles_5m) >= 20:
+             volumes_5m = [c.volume for c in candles_5m]
+             current_vol_5m = volumes_5m[-1]
+-            avg_vol_5m = np.mean(volumes_5m[-20:-1])
++            avg_vol_5m = np.median(volumes_5m[-20:-1])  # Use median for robustness to outliers
+             metrics.vol_surge_5m = current_vol_5m / avg_vol_5m if avg_vol_5m > 0 else 0.0

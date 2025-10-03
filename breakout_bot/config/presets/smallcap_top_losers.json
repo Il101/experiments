@@ -1,0 +1,78 @@
+{
+  "name": "smallcap_top_losers",
+  "description": "Short strategy for fastest falling small-cap tokens",
+  "target_markets": "Fastest falling small-cap tokens with retest opportunities for short entries",
+  "strategy_priority": "retest",
+  "risk": {
+    "risk_per_trade": 0.003,
+    "max_concurrent_positions": 2,
+    "daily_risk_limit": 0.03,
+    "max_position_size_usd": 25000,
+    "kill_switch_loss_limit": 0.10,
+    "correlation_limit": 0.15
+  },
+  "liquidity_filters": {
+    "min_24h_volume_usd": 100000000,
+    "min_oi_usd": 20000000,
+    "max_spread_bps": 6.0,
+    "min_depth_usd_0_5pct": 100000,
+    "min_depth_usd_0_3pct": 50000,
+    "min_trades_per_minute": 5.0
+  },
+  "volatility_filters": {
+    "atr_range_min": 0.015,
+    "atr_range_max": 0.08,
+    "bb_width_percentile_max": 30.0,
+    "volume_surge_1h_min": 2.0,
+    "volume_surge_5m_min": 3.0,
+    "oi_delta_threshold": 0.05
+  },
+  "signal_config": {
+    "momentum_volume_multiplier": 3.0,
+    "momentum_body_ratio_min": 0.6,
+    "momentum_epsilon": 0.0012,
+    "retest_pierce_tolerance": 0.002,
+    "retest_max_pierce_atr": 0.25,
+    "l2_imbalance_threshold": 0.4,
+    "vwap_gap_max_atr": 2.0
+  },
+  "position_config": {
+    "tp1_r": 1.0,
+    "tp1_size_pct": 0.4,
+    "tp2_r": 2.5,
+    "tp2_size_pct": 0.35,
+    "chandelier_atr_mult": 2.8,
+    "max_hold_time_hours": 18,
+    "add_on_enabled": false,
+    "add_on_max_size_pct": 0.0
+  },
+  "scanner_config": {
+    "max_candidates": 5,
+    "scan_interval_seconds": 180,
+    "score_weights": {
+      "vol_surge": 0.30,
+      "oi_delta": 0.20,
+      "atr_quality": 0.20,
+      "correlation": 0.15,
+      "trades_per_minute": 0.10,
+      "losers_momentum": 0.05
+    },
+    "symbol_whitelist": null,
+    "symbol_blacklist": ["BTC/USDT", "ETH/USDT", "USDT/USD"],
+    "top_n_by_volume": null
+  },
+  "execution_config": {
+    "enable_twap": true,
+    "enable_iceberg": true,
+    "max_depth_fraction": 0.18,
+    "twap_min_slices": 5,
+    "twap_max_slices": 14,
+    "twap_interval_seconds": 3.5,
+    "iceberg_min_notional": 2500.0,
+    "limit_offset_bps": 2.5,
+    "spread_widen_bps": 14.0,
+    "deadman_timeout_ms": 9000,
+    "taker_fee_bps": 8.0,
+    "maker_fee_bps": 2.2
+  }
+}

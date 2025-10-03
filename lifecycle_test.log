@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/iliazarikov/Documents/Python_crypto/Barahlo/experiments/test_position_lifecycle.py", line 31, in <module>
+    from breakout_bot.position.models import Position
+ModuleNotFoundError: No module named 'breakout_bot.position.models'

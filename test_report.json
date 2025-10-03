@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-09-18T01:48:28.599313",
+  "total_tests": 10,
+  "passed_tests": 6,
+  "failed_tests": 4,
+  "success_rate": 60.0,
+  "test_results": {
+    "api_health": "PASSED",
+    "engine_initialization": "PASSED",
+    "preset_loading": "PASSED",
+    "engine_lifecycle": "FAILED: ",
+    "scanner_functionality": "FAILED: ",
+    "trading_simulation": "FAILED: ",
+    "metrics_collection": "PASSED",
+    "websocket_connectivity": "PASSED",
+    "error_handling": "PASSED",
+    "performance_under_load": "FAILED: "
+  }
+}

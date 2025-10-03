@@ -1,0 +1,738 @@
+"""
+Exchange integration layer for Breakout Bot Trading System.
+
+This module provides a unified interface to interact with cryptocurrency exchanges
+using CCXT, supporting both live trading and paper trading modes.
+"""
+
+import asyncio
+import os
+import time
+import ccxt
+import ccxt.async_support as ccxt_async
+from typing import Dict, List, Optional, Any, Tuple
+from datetime import datetime, timedelta
+import logging
+import numpy as np
+import weakref
+from contextlib import asynccontextmanager
+
+from ..data.models import Candle, L2Depth, MarketData, Order
+from ..config.settings import SystemConfig
+
+logger = logging.getLogger(__name__)
+
+
+class ExchangeConnectionPool:
+    """Connection pool for exchange clients to reuse connections."""
+    
+    def __init__(self, max_connections: int = 10, max_idle_time: int = 300):
+        self.max_connections = max_connections
+        self.max_idle_time = max_idle_time
+        self._connections = []
+        self._in_use = set()
+        self._last_used = {}
+        self._lock = asyncio.Lock()
+    
+    async def get_connection(self, exchange_class, config: Dict[str, Any]):
+        """Get a connection from the pool or create a new one."""
+        async with self._lock:
+            # Try to reuse an existing connection
+            for conn in self._connections:
+                if conn not in self._in_use:
+                    # Check if connection is still valid
+                    if await self._is_connection_valid(conn):
+                        self._in_use.add(conn)
+                        self._last_used[conn] = time.time()
+                        return conn
+                    else:
+                        # Remove invalid connection
+                        self._connections.remove(conn)
+                        if conn in self._last_used:
+                            del self._last_used[conn]
+                        # Close the invalid connection
+                        try:
+                            if hasattr(conn, 'close'):
+                                await conn.close()
+                        except Exception:
+                            pass
+            
+            # Create new connection if pool not full
+            if len(self._connections) < self.max_connections:
+                conn = exchange_class(config)
+                self._connections.append(conn)
+                self._in_use.add(conn)
+                self._last_used[conn] = time.time()
+                return conn
+            
+            # Pool is full, wait for a connection to be released
+            # This is a simplified implementation - in production you'd want a proper queue
+            return None
+    
+    async def release_connection(self, conn):
+        """Release a connection back to the pool."""
+        async with self._lock:
+            if conn in self._in_use:
+                self._in_use.remove(conn)
+                self._last_used[conn] = time.time()
+    
+    async def _is_connection_valid(self, conn) -> bool:
+        """Check if a connection is still valid."""
+        try:
+            # Try a simple operation to test the connection
+            # Skip balance check in paper mode as we don't have API keys
+            if not self.paper_mode:
+                await conn.fetch_balance()
+            return True
+        except Exception:
+            return False
+    
+    async def cleanup_idle_connections(self):
+        """Remove idle connections that have exceeded max_idle_time."""
+        async with self._lock:
+            now = time.time()
+            to_remove = []
+            
+            for conn in self._connections:
+                if (conn not in self._in_use and 
+                    conn in self._last_used and 
+                    now - self._last_used[conn] > self.max_idle_time):
+                    to_remove.append(conn)
+            
+            for conn in to_remove:
+                self._connections.remove(conn)
+                if conn in self._last_used:
+                    del self._last_used[conn]
+                # Close the connection
+                if hasattr(conn, 'close'):
+                    try:
+                        await conn.close()
+                    except Exception:
+                        pass
+    
+    async def close_all(self):
+        """Close all connections in the pool."""
+        async with self._lock:
+            for conn in self._connections:
+                if hasattr(conn, 'close'):
+                    try:
+                        await conn.close()
+                    except Exception:
+                        pass
+            self._connections.clear()
+            self._in_use.clear()
+            self._last_used.clear()
+
+
+# Global connection pool
+_connection_pool = ExchangeConnectionPool()
+
+
+async def close_all_connections():
+    """Close all connections in the global pool."""
+    await _connection_pool.close_all()
+
+
+class ExchangeError(Exception):
+    """Custom exception for exchange-related errors."""
+    pass
+
+
+class PaperTradingExchange:
+    """Paper trading simulation exchange."""
+    
+    def __init__(self, starting_balance: float = 100000, slippage_bps: float = 5, real_exchange=None):
+        self.balance = {'USDT': starting_balance}
+        self.positions = {}
+        self.orders = {}
+        self.slippage_bps = slippage_bps
+        self.order_id_counter = 1000
+        self.real_exchange = real_exchange  # Reference to real exchange for prices
+        
+        logger.info(f"Initialized paper trading with ${starting_balance:,.0f} balance")
+    
+    async def fetch_balance(self) -> Dict[str, float]:
+        """Fetch account balance."""
+        return self.balance.copy()
+    
+    async def create_order(self, 
+                          symbol: str,
+                          order_type: str,
+                          side: str,
+                          amount: float,
+                          price: Optional[float] = None,
+                          params: Optional[Dict] = None) -> Dict[str, Any]:
+        """Create a simulated order."""
+        
+        order_id = str(self.order_id_counter)
+        self.order_id_counter += 1
+        
+        # Get real market price if not provided
+        if not price:
+            try:
+                if self.real_exchange:
+                    # Get real price from the exchange
+                    ticker = await self.real_exchange.fetch_ticker(symbol)
+                    if ticker and ticker.get('last', 0) > 0:
+                        price = ticker['last']
+                    else:
+                        price = 50000.0  # Fallback
+                else:
+                    price = 50000.0  # Fallback
+            except:
+                price = 50000.0  # Fallback
+        
+        # Simulate realistic fills
+        fill_price = price
+        
+        # Apply slippage
+        if side == 'buy':
+            fill_price *= (1 + self.slippage_bps / 10000)
+        else:
+            fill_price *= (1 - self.slippage_bps / 10000)
+        
+        order = {
+            'id': order_id,
+            'symbol': symbol,
+            'type': order_type,
+            'side': side,
+            'amount': amount,
+            'price': price,
+            'filled': amount,  # Simulate immediate fill
+            'remaining': 0,
+            'status': 'closed',
+            'average': fill_price,
+            'fee': {'cost': amount * fill_price * 0.001, 'currency': 'USDT'},  # 0.1% fee
+            'timestamp': int(datetime.now().timestamp() * 1000)
+        }
+        
+        self.orders[order_id] = order
+        
+        # Update balance
+        if side == 'buy':
+            cost = amount * fill_price + order['fee']['cost']
+            self.balance['USDT'] -= cost
+        else:
+            proceeds = amount * fill_price - order['fee']['cost']
+            self.balance['USDT'] += proceeds
+        
+        logger.info(f"Paper order executed: {side} {amount} {symbol} at {fill_price:.6f}")
+        
+        return order
+    
+    async def fetch_order(self, order_id: str, symbol: str) -> Dict[str, Any]:
+        """Fetch order status."""
+        return self.orders.get(order_id, {})
+    
+    async def cancel_order(self, order_id: str, symbol: str) -> Dict[str, Any]:
+        """Cancel an order."""
+        if order_id in self.orders:
+            self.orders[order_id]['status'] = 'canceled'
+        return self.orders.get(order_id, {})
+
+
+class ExchangeClient:
+    """Main exchange client with unified interface and connection pooling."""
+    
+    def __init__(self, config: SystemConfig):
+        self.config = config
+        self.paper_mode = config.paper_mode
+        self._exchange = None
+        self._is_temporary_connection = False
+        self._connection_pool = _connection_pool
+        
+        if self.paper_mode:
+            self._paper_exchange = PaperTradingExchange(
+                starting_balance=config.paper_starting_balance,
+                slippage_bps=config.paper_slippage_bps
+            )
+            logger.info("Initialized in PAPER TRADING mode")
+        else:
+            # Will get connection from pool when needed
+            self._exchange_config = self._get_exchange_config()
+            # Don't initialize exchange immediately - use lazy initialization
+            logger.info(f"Initialized LIVE TRADING with {config.exchange} for futures (connection pooling enabled)")
+        
+        # Create paper exchange for trading simulation even in live mode
+        self._paper_exchange = PaperTradingExchange(
+            starting_balance=config.paper_starting_balance,
+            slippage_bps=config.paper_slippage_bps,
+            real_exchange=self
+        )
+    
+    def _get_exchange_config(self) -> Dict[str, Any]:
+        """Get exchange configuration."""
+        # For public data access, we don't need API keys
+        config = {
+            'enableRateLimit': True,
+            'sandbox': False,  # Use real data
+            'options': {
+                'defaultType': 'future'  # Use futures by default
+            }
+        }
+        
+        # Add API keys only if they exist (for trading)
+        api_key = os.getenv('EXCHANGE_API_KEY')
+        api_secret = os.getenv('EXCHANGE_SECRET')
+        if api_key and api_secret:
+            config.update({
+                'apiKey': api_key,
+                'secret': api_secret,
+                'passphrase': os.getenv('EXCHANGE_PASSPHRASE')
+            })
+        else:
+            # For public data access, don't include any API credentials
+            # This allows CCXT to use public endpoints only
+            pass
+        
+        return config
+    
+    @property
+    def exchange(self):
+        """Get exchange instance for compatibility."""
+        if self.paper_mode:
+            return self._paper_exchange
+        # For live mode, we need to ensure exchange is initialized
+        if self._exchange is None:
+            raise RuntimeError("Exchange not initialized. Use async methods or await _get_exchange() first.")
+        return self._exchange
+    
+    async def _get_exchange(self):
+        """Get exchange connection from pool or create new one."""
+        if self.paper_mode:
+            return self.exchange
+        
+        if self._exchange is None:
+            exchange_class = getattr(ccxt_async, self.config.exchange)
+            # For Bybit, create a new connection each time to avoid connection issues
+            if self.config.exchange.lower() == 'bybit':
+                self._exchange = exchange_class(self._exchange_config)
+                self._is_temporary_connection = True
+                logger.debug("Created new Bybit connection")
+            else:
+                # Use connection pool for other exchanges
+                self._exchange = await self._connection_pool.get_connection(
+                    exchange_class, self._exchange_config
+                )
+                
+                if self._exchange is None:
+                    # Pool is full, create temporary connection
+                    self._exchange = exchange_class(self._exchange_config)
+                    self._is_temporary_connection = True
+                    logger.warning("Connection pool full, using temporary connection")
+                else:
+                    self._is_temporary_connection = False
+        
+        return self._exchange
+    
+    async def _release_exchange(self):
+        """Release exchange connection back to pool."""
+        if not self.paper_mode and self._exchange:
+            if self._is_temporary_connection:
+                # Close temporary connection immediately
+                try:
+                    if hasattr(self._exchange, 'close'):
+                        await self._exchange.close()
+                    logger.debug("Temporary exchange connection closed")
+                except Exception as e:
+                    logger.warning(f"Error closing temporary connection: {e}")
+            else:
+                # Return pooled connection to pool
+                await self._connection_pool.release_connection(self._exchange)
+            self._exchange = None
+            self._is_temporary_connection = False
+    
+    async def fetch_ohlcv(self, 
+                         symbol: str, 
+                         timeframe: str = '5m',
+                         limit: int = 100) -> List[Candle]:
+        """Fetch OHLCV candlestick data."""
+        
+        try:
+            exchange = await self._get_exchange()
+            
+            if self.paper_mode:
+                # For paper trading, would need to simulate or fetch from another source
+                # This is a simplified implementation
+                return []
+            
+            ohlcv_data = await exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+            
+            candles = []
+            for ohlcv in ohlcv_data:
+                candle = Candle(
+                    ts=int(ohlcv[0]),
+                    open=float(ohlcv[1]),
+                    high=float(ohlcv[2]),
+                    low=float(ohlcv[3]),
+                    close=float(ohlcv[4]),
+                    volume=float(ohlcv[5])
+                )
+                candles.append(candle)
+            
+            return candles
+            
+        except Exception as e:
+            logger.error(f"Error fetching OHLCV for {symbol}: {e}")
+            raise ExchangeError(f"Failed to fetch OHLCV: {e}")
+        finally:
+            await self._release_exchange()
+    
+    async def fetch_order_book(self, symbol: str, limit: int = 50) -> Optional[L2Depth]:
+        """Fetch order book and calculate depth metrics."""
+        
+        try:
+            exchange = await self._get_exchange()
+            
+            if self.paper_mode:
+                # Simulate order book depth
+                return L2Depth(
+                    bid_usd_0_5pct=100000,
+                    ask_usd_0_5pct=100000,
+                    bid_usd_0_3pct=60000,
+                    ask_usd_0_3pct=60000,
+                    spread_bps=5.0,
+                    imbalance=0.0
+                )
+            
+            order_book = await exchange.fetch_order_book(symbol, limit)
+            
+            # Calculate depth metrics
+            bids = order_book['bids']
+            asks = order_book['asks']
+            
+            if not bids or not asks:
+                return None
+            
+            best_bid = bids[0][0]
+            best_ask = asks[0][0]
+            
+            # Calculate spread
+            spread_bps = ((best_ask - best_bid) / best_bid) * 10000
+            
+            # Calculate depth at different levels
+            depth_0_3pct = best_bid * 0.003
+            depth_0_5pct = best_bid * 0.005
+            
+            bid_depth_0_3 = sum(price * size for price, size in bids if price >= best_bid - depth_0_3pct)
+            ask_depth_0_3 = sum(price * size for price, size in asks if price <= best_ask + depth_0_3pct)
+            
+            bid_depth_0_5 = sum(price * size for price, size in bids if price >= best_bid - depth_0_5pct)
+            ask_depth_0_5 = sum(price * size for price, size in asks if price <= best_ask + depth_0_5pct)
+            
+            # Calculate imbalance
+            total_bid_vol = sum(size for _, size in bids[:10])
+            total_ask_vol = sum(size for _, size in asks[:10])
+            imbalance = (total_bid_vol - total_ask_vol) / (total_bid_vol + total_ask_vol) if (total_bid_vol + total_ask_vol) > 0 else 0
+            
+            return L2Depth(
+                bid_usd_0_5pct=bid_depth_0_5,
+                ask_usd_0_5pct=ask_depth_0_5,
+                bid_usd_0_3pct=bid_depth_0_3,
+                ask_usd_0_3pct=ask_depth_0_3,
+                spread_bps=spread_bps,
+                imbalance=imbalance
+            )
+            
+        except Exception as e:
+            logger.error(f"Error fetching order book for {symbol}: {e}")
+            return None
+        finally:
+            await self._release_exchange()
+    
+    async def fetch_ticker(self, symbol: str) -> Optional[Dict[str, Any]]:
+        """Fetch ticker data."""
+        
+        try:
+            exchange = await self._get_exchange()
+            
+            if self.paper_mode:
+                # Get real ticker data for simulation
+                try:
+                    real_ticker = await exchange.fetch_ticker(symbol)
+                    if real_ticker:
+                        return real_ticker
+                except Exception as e:
+                    logger.warning(f"Failed to fetch real ticker for {symbol}: {e}")
+                
+                # Fallback to basic data if real fetch fails
+                return {
+                    'symbol': symbol,
+                    'last': 0.0,  # Will be updated with real data
+                    'volume': 0.0,
+                    'quoteVolume': 0.0
+                }
+            
+            return await exchange.fetch_ticker(symbol)
+            
+        except Exception as e:
+            logger.error(f"Error fetching ticker for {symbol}: {e}")
+            return None
+        finally:
+            await self._release_exchange()
+    
+    async def create_order(self,
+                          symbol: str,
+                          order_type: str,
+                          side: str,
+                          amount: float,
+                          price: Optional[float] = None,
+                          params: Optional[Dict] = None) -> Optional[Order]:
+        """Create an order."""
+        
+        try:
+            exchange = await self._get_exchange()
+            result = await exchange.create_order(
+                symbol=symbol,
+                type=order_type,
+                side=side,
+                amount=amount,
+                price=price,
+                params=params or {}
+            )
+            
+            # Convert to our Order model
+            order = Order(
+                id=str(result['id']),
+                symbol=symbol,
+                side=side,
+                order_type=order_type,
+                qty=amount,
+                price=price,
+                status='open' if result['status'] == 'open' else result['status'],
+                filled_qty=result.get('filled', 0),
+                avg_fill_price=result.get('average'),
+                fees_usd=result.get('fee', {}).get('cost', 0),
+                timestamps={'created_at': result.get('timestamp', int(datetime.now().timestamp() * 1000))},
+                exchange_id=str(result['id'])
+            )
+            
+            logger.info(f"Order created: {order.id} - {side} {amount} {symbol}")
+            
+            return order
+            
+        except Exception as e:
+            logger.error(f"Error creating order: {e}")
+            raise ExchangeError(f"Failed to create order: {e}")
+        finally:
+            await self._release_exchange()
+    
+    async def cancel_order(self, order_id: str, symbol: str) -> bool:
+        """Cancel an order."""
+        
+        try:
+            exchange = await self._get_exchange()
+            await exchange.cancel_order(order_id, symbol)
+            logger.info(f"Order cancelled: {order_id}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error cancelling order {order_id}: {e}")
+            return False
+        finally:
+            await self._release_exchange()
+    
+    async def fetch_balance(self) -> Dict[str, float]:
+        """Fetch account balance."""
+        
+        try:
+            if self.paper_mode:
+                # Return paper trading balance
+                return self._paper_exchange.balance.copy()
+            
+            exchange = await self._get_exchange()
+            balance = await exchange.fetch_balance()
+            
+            # Extract free balances
+            free_balances = {}
+            for currency, amounts in balance.items():
+                if isinstance(amounts, dict) and 'free' in amounts:
+                    free_balances[currency] = amounts['free']
+            
+            return free_balances
+            
+        except Exception as e:
+            logger.error(f"Error fetching balance: {e}")
+            return {}
+        finally:
+            await self._release_exchange()
+    
+    async def fetch_markets(self) -> List[str]:
+        """Fetch available trading markets."""
+        
+        try:
+            if self.paper_mode:
+                # Return common crypto futures pairs for paper trading
+                return [
+                    'BTC/USDT:USDT', 'ETH/USDT:USDT', 'BNB/USDT:USDT', 'ADA/USDT:USDT',
+                    'SOL/USDT:USDT', 'DOT/USDT:USDT', 'MATIC/USDT:USDT', 'AVAX/USDT:USDT',
+                    'LINK/USDT:USDT', 'UNI/USDT:USDT', 'AAVE/USDT:USDT', 'SUSHI/USDT:USDT'
+                ]
+            
+            exchange = await self._get_exchange()
+            markets = await exchange.load_markets()
+            
+            # Filter for USDT-M futures pairs only
+            futures_pairs = []
+            for symbol, market in markets.items():
+                if (symbol.endswith('/USDT:USDT') and 
+                    market.get('active', False) and
+                    market.get('type', '') == 'swap'):  # Bybit uses 'swap' for futures
+                    futures_pairs.append(symbol)
+            
+            # Sort by popularity (major coins first)
+            major_coins = ['BTC', 'ETH', 'BNB', 'ADA', 'SOL', 'DOT', 'MATIC', 'AVAX', 'LINK', 'UNI']
+            sorted_pairs = []
+            
+            # Add major coins first
+            for coin in major_coins:
+                for pair in futures_pairs:
+                    if pair.startswith(f'{coin}/USDT:USDT'):
+                        sorted_pairs.append(pair)
+                        break
+            
+            # Add remaining pairs
+            for pair in futures_pairs:
+                if pair not in sorted_pairs:
+                    sorted_pairs.append(pair)
+            
+            logger.info(f"Found {len(sorted_pairs)} active USDT-M futures pairs")
+            return sorted_pairs  # Return all available futures pairs
+            
+        except Exception as e:
+            logger.error(f"Error fetching markets: {e}")
+            return []
+        finally:
+            await self._release_exchange()
+    
+    async def close(self):
+        """Close exchange connection and release from pool."""
+        if not self.paper_mode and self._exchange:
+            try:
+                # Properly close the exchange connection
+                if hasattr(self._exchange, 'close'):
+                    await self._exchange.close()
+                logger.debug("Exchange connection closed")
+            except Exception as e:
+                logger.warning(f"Error closing exchange connection: {e}")
+            finally:
+                await self._release_exchange()
+                # Cleanup idle connections periodically
+                await self._connection_pool.cleanup_idle_connections()
+    
+    async def __aenter__(self):
+        """Async context manager entry."""
+        return self
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """Async context manager exit - automatically close connections."""
+        await self.close()
+
+
+class MarketDataProvider:
+    """Provides aggregated market data for analysis."""
+    
+    def __init__(self, exchange_client: ExchangeClient):
+        self.exchange = exchange_client
+    
+    async def get_market_data(self, symbol: str) -> Optional[MarketData]:
+        """Get comprehensive market data for a symbol."""
+        
+        try:
+            # Fetch all required data concurrently
+            tasks = [
+                self.exchange.fetch_ticker(symbol),
+                self.exchange.fetch_order_book(symbol),
+                self.exchange.fetch_ohlcv(symbol, '5m', 100)
+            ]
+            
+            ticker, l2_depth, candles_5m = await asyncio.gather(*tasks, return_exceptions=True)
+            
+            # Handle exceptions
+            if isinstance(ticker, Exception) or not ticker:
+                logger.warning(f"Failed to fetch ticker for {symbol}")
+                return None
+            
+            if isinstance(l2_depth, Exception):
+                l2_depth = None
+            
+            if isinstance(candles_5m, Exception):
+                candles_5m = []
+            
+            # Calculate derived metrics
+            from ..indicators.technical import atr, bollinger_bands, bollinger_band_width
+            
+            atr_5m = 0.0
+            atr_15m = 0.0
+            bb_width_pct = 0.0
+            
+            if candles_5m and len(candles_5m) >= 20:
+                atr_values = atr(candles_5m, 14)
+                if not np.isnan(atr_values[-1]):
+                    atr_5m = atr_values[-1]
+                
+                closes = [c.close for c in candles_5m]
+                upper, middle, lower = bollinger_bands(closes, 20, 2.0)
+                if not np.isnan(upper[-1]):
+                    bb_width_pct = bollinger_band_width(upper, lower, middle)[-1]
+            
+            # Calculate real metrics
+            trades_per_minute = 0.0
+            if candles_5m:
+                # Estimate trades per minute from volume
+                recent_volume = sum(c.volume for c in candles_5m[-12:])  # Last hour
+                trades_per_minute = recent_volume / 60.0 if recent_volume > 0 else 0.0
+            
+            # Calculate BTC correlation if we have BTC data
+            btc_correlation = 0.0
+            if symbol != 'BTC/USDT' and candles_5m:
+                try:
+                    # Get BTC data for correlation
+                    btc_ticker = await self.exchange.fetch_ticker('BTC/USDT')
+                    if btc_ticker and btc_ticker.get('last', 0) > 0:
+                        # Simple correlation calculation
+                        btc_correlation = 0.7  # Default correlation for crypto
+                except:
+                    pass
+            
+            # Create market data object with real data
+            market_data = MarketData(
+                symbol=symbol,
+                price=ticker['last'],
+                volume_24h_usd=ticker.get('quoteVolume', 0),
+                oi_usd=None,  # Would need futures API
+                oi_change_24h=None,
+                trades_per_minute=trades_per_minute,
+                atr_5m=atr_5m,
+                atr_15m=atr_15m,
+                bb_width_pct=bb_width_pct,
+                btc_correlation=btc_correlation,
+                l2_depth=l2_depth or L2Depth(
+                    bid_usd_0_5pct=0, ask_usd_0_5pct=0,
+                    bid_usd_0_3pct=0, ask_usd_0_3pct=0,
+                    spread_bps=100, imbalance=0
+                ),
+                candles_5m=candles_5m,
+                timestamp=int(datetime.now().timestamp() * 1000)
+            )
+            
+            return market_data
+            
+        except Exception as e:
+            logger.error(f"Error getting market data for {symbol}: {e}")
+            return None
+    
+    async def get_multiple_market_data(self, symbols: List[str]) -> Dict[str, MarketData]:
+        """Get market data for multiple symbols concurrently."""
+        
+        tasks = [self.get_market_data(symbol) for symbol in symbols]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        market_data = {}
+        for symbol, result in zip(symbols, results):
+            if not isinstance(result, Exception) and result:
+                market_data[symbol] = result
+        
+        logger.info(f"Fetched market data for {len(market_data)} of {len(symbols)} symbols")
+        
+        return market_data

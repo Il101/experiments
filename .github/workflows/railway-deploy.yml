@@ -1,0 +1,41 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches:
+      - main
+      - production
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm i -g @railway/cli
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --detach
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Health check
+        run: |
+          echo "Checking deployment health..."
+          # Add your Railway app URL here
+          # curl -f https://your-app.railway.app/api/health || exit 1
+
+      - name: Notify on success
+        if: success()
+        run: echo "✅ Deployment successful!"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "❌ Deployment failed!"

@@ -1,0 +1,28 @@
+--- a/breakout_bot/execution/manager.py
++++ b/breakout_bot/execution/manager.py
+@@ -84,6 +84,25 @@ class ExecutionManager:
+         if total_quantity <= 0:
+             logger.warning("execute_trade called with non-positive quantity for %s", symbol)
+             return None
++        
++        # ===== DEPTH GUARD: Ensure order doesn't exceed available liquidity =====
++        depth = await self._get_depth(symbol, market_data)
++        if depth:
++            # Determine available depth based on side
++            available_depth_usd = depth.ask_depth_0_3 if side == 'buy' else depth.bid_depth_0_3
++            
++            # Calculate max allowed size (fraction of depth)
++            max_size_usd = available_depth_usd * self.config.max_depth_fraction
++            
++            # Calculate order notional value
++            order_notional = total_quantity * market_data.price
++            
++            if order_notional > max_size_usd:
++                logger.warning(
++                    f"Order size ${order_notional:.2f} exceeds depth limit ${max_size_usd:.2f} "
++                    f"({self.config.max_depth_fraction*100:.0f}% of ${available_depth_usd:.2f}), clipping"
++                )
++                total_quantity = (max_size_usd / market_data.price) * 0.95  # 5% safety margin
+ 
+         depth = await self._get_depth(symbol, market_data)
+         if not depth:

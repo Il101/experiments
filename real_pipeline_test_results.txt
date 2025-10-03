@@ -1,0 +1,127 @@
+2025-10-03 14:02:38,206 - breakout_bot.utils.monitoring_manager - INFO - MonitoringManager initialized
+2025-10-03 14:02:38,206 - breakout_bot.utils.monitoring_manager - INFO - __init__:41 - MonitoringManager initialized
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - OptimizedOrchestraEngine initialized with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - __init__:169 - OptimizedOrchestraEngine initialized with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - Trading mode: paper
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - __init__:170 - Trading mode: paper
+2025-10-03 14:02:38,207 - breakout_bot.core.state_machine - INFO - StateMachine initialized with state: initializing
+2025-10-03 14:02:38,207 - breakout_bot.core.state_machine - INFO - __init__:158 - StateMachine initialized with state: initializing
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:334 - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:345 - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:404 - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:409 - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Initialized paper trading with $100,000 balance
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:157 - Initialized paper trading with $100,000 balance
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Initialized in PAPER TRADING mode with live market data
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:359 - Initialized in PAPER TRADING mode with live market data
+2025-10-03 14:02:38,207 - breakout_bot.scanner.market_scanner - INFO - Initialized scanner with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.scanner.market_scanner - INFO - __init__:410 - Initialized scanner with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - __init__:667 - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - Primary strategy: momentum
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - __init__:668 - Primary strategy: momentum
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - __init__:477 - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - Risk per trade: 1.5%
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - __init__:478 - Risk per trade: 1.5%
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - Max positions: 3
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - __init__:479 - Max positions: 3
+2025-10-03 14:02:38,207 - breakout_bot.position.position_manager - INFO - Initialized position manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.position.position_manager - INFO - __init__:239 - Initialized position manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - Initializing trading system components...
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - initialize:221 - Initializing trading system components...
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:334 - ExchangeClient.__init__ - config.paper_mode: True, self.paper_mode: True
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:345 - Инициализирован BybitRateLimiter для управления rate limits
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:404 - Применена оптимизированная конфигурация для Bybit API
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - _get_exchange_config:409 - _get_exchange_config - api_key exists: False, api_secret exists: False
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Initialized paper trading with $100,000 balance
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:157 - Initialized paper trading with $100,000 balance
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - Initialized in PAPER TRADING mode with live market data
+2025-10-03 14:02:38,207 - breakout_bot.exchange.exchange_client - INFO - __init__:359 - Initialized in PAPER TRADING mode with live market data
+2025-10-03 14:02:38,207 - breakout_bot.scanner.market_scanner - INFO - Initialized scanner with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.scanner.market_scanner - INFO - __init__:410 - Initialized scanner with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - __init__:667 - Initialized signal generator with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - Primary strategy: momentum
+2025-10-03 14:02:38,207 - breakout_bot.signals.signal_generator - INFO - __init__:668 - Primary strategy: momentum
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - __init__:477 - Initialized risk manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - Risk per trade: 1.5%
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - __init__:478 - Risk per trade: 1.5%
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - Max positions: 3
+2025-10-03 14:02:38,207 - breakout_bot.risk.risk_manager - INFO - __init__:479 - Max positions: 3
+2025-10-03 14:02:38,207 - breakout_bot.position.position_manager - INFO - Initialized position manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.position.position_manager - INFO - __init__:239 - Initialized position manager with preset: breakout_v1_working
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - Initializing enhanced market microstructure components...
+2025-10-03 14:02:38,207 - breakout_bot.core.engine - INFO - initialize:238 - Initializing enhanced market microstructure components...
+2025-10-03 14:02:38,207 - breakout_bot.data.streams.trades_ws - INFO - TradesAggregator initialized
+2025-10-03 14:02:38,207 - breakout_bot.data.streams.trades_ws - INFO - __init__:130 - TradesAggregator initialized
+2025-10-03 14:02:38,208 - breakout_bot.data.streams.orderbook_ws - INFO - OrderBookManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.data.streams.orderbook_ws - INFO - __init__:89 - OrderBookManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.features.density - INFO - DensityDetector initialized: k=7.0, bucket_ticks=3, eat_ratio=0.75
+2025-10-03 14:02:38,208 - breakout_bot.features.density - INFO - __init__:87 - DensityDetector initialized: k=7.0, bucket_ticks=3, eat_ratio=0.75
+2025-10-03 14:02:38,208 - breakout_bot.features.activity - INFO - ActivityTracker initialized: lookback=60, drop_threshold=0.4
+2025-10-03 14:02:38,208 - breakout_bot.features.activity - INFO - __init__:68 - ActivityTracker initialized: lookback=60, drop_threshold=0.4
+2025-10-03 14:02:38,208 - breakout_bot.core.engine - INFO - Enhanced market microstructure components initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.engine - INFO - initialize:274 - Enhanced market microstructure components initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.state_machine - INFO - StateMachine initialized with state: initializing
+2025-10-03 14:02:38,208 - breakout_bot.core.state_machine - INFO - __init__:158 - StateMachine initialized with state: initializing
+2025-10-03 14:02:38,208 - breakout_bot.core.error_handler - INFO - ErrorHandler initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.error_handler - INFO - __init__:198 - ErrorHandler initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.scanning_manager - INFO - ScanningManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.scanning_manager - INFO - __init__:85 - ScanningManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.signal_manager - INFO - SignalManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.signal_manager - INFO - __init__:85 - SignalManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.utils.resource_monitor - INFO - Resource monitor initialized
+2025-10-03 14:02:38,208 - breakout_bot.utils.resource_monitor - INFO - __init__:92 - Resource monitor initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.resource_manager - INFO - ResourceManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.resource_manager - INFO - __init__:74 - ResourceManager initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.trading_orchestrator - INFO - TradingOrchestrator initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.trading_orchestrator - INFO - __init__:91 - TradingOrchestrator initialized
+2025-10-03 14:02:38,208 - breakout_bot.core.engine - INFO - All components initialized successfully
+2025-10-03 14:02:38,208 - breakout_bot.core.engine - INFO - initialize:332 - All components initialized successfully
+2025-10-03 14:02:38,208 - breakout_bot.core.state_machine - INFO - State transition: initializing -> scanning (Initialization complete)
+2025-10-03 14:02:38,208 - breakout_bot.core.state_machine - INFO - transition_to:237 - State transition: initializing -> scanning (Initialization complete)
+2025-10-03 14:02:38,208 - breakout_bot - INFO - [state_machine] State transition: initializing -> scanning
+2025-10-03 14:02:38,208 - breakout_bot - INFO - _log:138 - [state_machine] State transition: initializing -> scanning
+Traceback (most recent call last):
+  File "/Users/iliazarikov/Documents/Python_crypto/Barahlo/experiments/test_real_pipeline.py", line 44, in run_real_test
+    print(f"   Mode: {'Paper Trading' if self.engine.is_paper_trading else 'Live Trading'}")
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'OptimizedOrchestraEngine' object has no attribute 'is_paper_trading'
+2025-10-03 14:02:38,211 - breakout_bot.core.engine - INFO - Stopping OptimizedOrchestraEngine...
+2025-10-03 14:02:38,211 - breakout_bot.core.engine - INFO - stop:627 - Stopping OptimizedOrchestraEngine...
+2025-10-03 14:02:38,211 - breakout_bot.core.state_machine - INFO - State transition: scanning -> stopped (Manual stop requested)
+2025-10-03 14:02:38,211 - breakout_bot.core.state_machine - INFO - transition_to:237 - State transition: scanning -> stopped (Manual stop requested)
+2025-10-03 14:02:38,211 - breakout_bot - INFO - [state_machine] State transition: scanning -> stopped
+2025-10-03 14:02:38,211 - breakout_bot - INFO - _log:138 - [state_machine] State transition: scanning -> stopped
+2025-10-03 14:02:38,211 - breakout_bot.utils.monitoring_manager - INFO - Cleaned up 0 inactive sessions
+2025-10-03 14:02:38,211 - breakout_bot.utils.monitoring_manager - INFO - end_all_sessions:125 - Cleaned up 0 inactive sessions
+2025-10-03 14:02:38,211 - breakout_bot.utils.monitoring_manager - INFO - Ended 0 active sessions
+2025-10-03 14:02:38,211 - breakout_bot.utils.monitoring_manager - INFO - end_all_sessions:127 - Ended 0 active sessions
+2025-10-03 14:02:38,211 - breakout_bot.core.engine - INFO - All monitoring sessions ended
+2025-10-03 14:02:38,211 - breakout_bot.core.engine - INFO - stop:637 - All monitoring sessions ended
+2025-10-03 14:02:38,211 - breakout_bot.core.engine - INFO - Engine stopped successfully
+2025-10-03 14:02:38,211 - breakout_bot.core.engine - INFO - stop:643 - Engine stopped successfully
+2025-10-03 14:02:38,211 - breakout_bot.core.resource_manager - INFO - Starting resource monitoring...
+2025-10-03 14:02:38,211 - breakout_bot.core.resource_manager - INFO - start_monitoring:78 - Starting resource monitoring...
+
+================================================================================
+🔥 РЕАЛЬНЫЙ ТЕСТ ТОРГОВОГО ПАЙПЛАЙНА
+================================================================================
+
+📦 ФАЗА 1: ИНИЦИАЛИЗАЦИЯ РЕАЛЬНОГО ДВИЖКА
+--------------------------------------------------------------------------------
+✅ Движок инициализирован
+   Пресет: breakout_v1
+   Exchange: ExchangeClient
+
+❌ Ошибка теста: 'OptimizedOrchestraEngine' object has no attribute 'is_paper_trading'

@@ -1,0 +1,9 @@
+# Railway Configuration File
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "python -m uvicorn breakout_bot.api.main:app --host 0.0.0.0 --port $PORT"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

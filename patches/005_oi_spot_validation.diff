@@ -1,0 +1,45 @@
+--- a/breakout_bot/scanner/market_scanner.py
++++ b/breakout_bot/scanner/market_scanner.py
+@@ -73,11 +73,20 @@ class MarketFilter:
+         )
+         
+         # Open Interest filter (if available)
+-        if market_data.oi_usd is not None and self.liquidity_filters.min_oi_usd is not None:
+-            results['min_oi'] = FilterResult(
+-                passed=market_data.oi_usd >= self.liquidity_filters.min_oi_usd,
+-                value=market_data.oi_usd,
+-                threshold=self.liquidity_filters.min_oi_usd,
+-                reason=f"OI: ${market_data.oi_usd:,.0f}"
+-            )
++        # ===== FIX: Skip OI filter for spot markets (OI=0 is expected) =====
++        market_type = getattr(market_data, 'market_type', 'unknown')
++        
++        if self.liquidity_filters.min_oi_usd is not None:
++            if market_type == 'spot':
++                # Spot markets don't have OI - skip this filter
++                results['min_oi'] = FilterResult(
++                    passed=True,
++                    value=None,
++                    threshold=self.liquidity_filters.min_oi_usd,
++                    reason="Spot market (OI filter skipped)"
++                )
++            elif market_data.oi_usd is not None:
++                results['min_oi'] = FilterResult(
++                    passed=market_data.oi_usd >= self.liquidity_filters.min_oi_usd,
++                    value=market_data.oi_usd,
++                    threshold=self.liquidity_filters.min_oi_usd,
++                    reason=f"OI: ${market_data.oi_usd:,.0f}"
++                )
+         
+         # Spread filter (с проверкой на None)
+
+--- a/breakout_bot/data/models.py
++++ b/breakout_bot/data/models.py
+@@ -250,6 +250,7 @@ class MarketData(BaseModel):
+     trades_per_minute: float = Field(default=0.0, description="Trades per minute")
+     candles_5m: List[Candle] = Field(default_factory=list, description="5m candles")
+     candles_1h: List[Candle] = Field(default_factory=list, description="1h candles")
++    market_type: str = Field(default="unknown", description="Market type: spot or futures")
+     
+     @field_validator('volume_24h_usd', 'price')
+     @classmethod

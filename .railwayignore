@@ -1,0 +1,89 @@
+# Railway Ignore File
+# Similar to .gitignore, but for Railway deployments
+
+# Local development files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+forced_signal*.log
+lifecycle_test.log
+full_cycle*.log
+
+# Test and diagnostic files
+test_*.py
+debug_*.py
+analyze_*.py
+check_*.py
+diagnose_*.py
+compare_*.py
+fix_*.py
+force_*.py
+memory_monitor.py
+cleanup_logs.py
+
+# Database files (use Railway database instead)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Memory snapshots
+memory_snapshot_*.json
+
+# PID files
+pids/
+*.pid
+
+# Reports
+reports/
+*.txt
+AUDIT_*.md
+CHANGES_*.txt
+*_REPORT.md
+*_SUMMARY.md
+*_STATUS.md
+
+# Documentation (not needed in production)
+*.md
+!README.md
+!API_DOCUMENTATION.md
+
+# Test directories
+tests/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Deployment scripts (not needed on Railway)
+deploy.sh
+check_patches.sh
+start.sh
+
+# Docker files (Railway uses them, but builds in cloud)
+docker-compose.yml
+.dockerignore
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Node modules (if any)
+node_modules/

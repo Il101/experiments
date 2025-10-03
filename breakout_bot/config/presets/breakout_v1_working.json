@@ -1,0 +1,80 @@
+{
+  "name": "breakout_v1_working",
+  "description": "Balanced breakout strategy optimized for consistent profits",
+  "target_markets": "All cryptocurrencies with realistic liquidity and volatility",
+  "strategy_priority": "momentum",
+  "risk": {
+    "risk_per_trade": 0.015,
+    "max_concurrent_positions": 3,
+    "daily_risk_limit": 0.08,
+    "max_position_size_usd": 100000,
+    "kill_switch_loss_limit": 0.18,
+    "correlation_limit": 0.4
+  },
+  "liquidity_filters": {
+    "min_24h_volume_usd": 15000000,
+    "min_oi_usd": 5000000,
+    "max_spread_bps": 20,
+    "min_depth_usd_0_5pct": 15000,
+    "min_depth_usd_0_3pct": 10000,
+    "min_trades_per_minute": 4.0
+  },
+  "volatility_filters": {
+    "atr_range_min": 0.005,
+    "atr_range_max": 0.10,
+    "bb_width_percentile_max": 80,
+    "volume_surge_1h_min": 1.2,
+    "volume_surge_5m_min": 1.6,
+    "oi_delta_threshold": 0.02
+  },
+  "signal_config": {
+    "momentum_volume_multiplier": 1.4,
+    "momentum_body_ratio_min": 0.3,
+    "momentum_epsilon": 0.0012,
+    "retest_pierce_tolerance": 0.002,
+    "retest_max_pierce_atr": 0.35,
+    "l2_imbalance_threshold": 0.15,
+    "vwap_gap_max_atr": 2.0
+  },
+  "position_config": {
+    "tp1_r": 1.5,
+    "tp1_size_pct": 0.4,
+    "tp2_r": 2.8,
+    "tp2_size_pct": 0.35,
+    "chandelier_atr_mult": 2.3,
+    "max_hold_time_hours": 20,
+    "add_on_enabled": true,
+    "add_on_max_size_pct": 0.3
+  },
+  "scanner_config": {
+    "max_candidates": 30,
+    "scan_interval_seconds": 120,
+    "score_weights": {
+      "vol_surge": 0.3,
+      "oi_delta": 0.15,
+      "atr_quality": 0.2,
+      "correlation": 0.15,
+      "trades_per_minute": 0.2
+    },
+    "symbol_whitelist": null,
+    "symbol_blacklist": [
+      "USDT/USD",
+      "USDC/USD"
+    ],
+    "top_n_by_volume": 200
+  },
+  "execution_config": {
+    "enable_twap": true,
+    "enable_iceberg": true,
+    "max_depth_fraction": 0.25,
+    "twap_min_slices": 4,
+    "twap_max_slices": 12,
+    "twap_interval_seconds": 2.5,
+    "iceberg_min_notional": 6000,
+    "limit_offset_bps": 1.5,
+    "spread_widen_bps": 10,
+    "deadman_timeout_ms": 8000,
+    "taker_fee_bps": 6.5,
+    "maker_fee_bps": 1.5
+  }
+}

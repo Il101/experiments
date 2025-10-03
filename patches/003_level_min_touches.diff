@@ -1,0 +1,18 @@
+--- a/breakout_bot/indicators/levels.py
++++ b/breakout_bot/indicators/levels.py
+@@ -275,6 +275,13 @@ class LevelDetector:
+         """Validate and filter level candidates."""
+         validated_levels = []
+         
+         for candidate in merged_candidates:
++            # ===== MIN TOUCHES CHECK: Reject levels with too few touches =====
++            if len(candidate.touches) < self.min_touches:
++                logger.debug(
++                    f"Rejecting level {candidate.price:.6f} ({candidate.level_type}): "
++                    f"only {len(candidate.touches)} touches (min {self.min_touches})"
++                )
++                continue
++            
+             # Check if candidate has enough touches within tolerance
+             valid_touches = self._count_valid_touches(
+                 candidate.price,

@@ -1,0 +1,411 @@
+/* ===========================
+   POSITION CARD STYLES
+   =========================== */
+
+.position-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.position-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Header */
+.position-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--bs-gray-300);
+}
+
+.position-title h5 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.position-meta {
+  margin-top: 0.25rem;
+}
+
+.position-pnl {
+  text-align: right;
+}
+
+.pnl-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pnl-usd {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pnl-percent {
+  font-size: 0.85rem;
+}
+
+/* Progress Section */
+.position-progress-section {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--bs-light);
+  border-radius: 8px;
+}
+
+/* Price Levels */
+.position-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+}
+
+.level-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.level-label {
+  min-width: 60px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.level-value {
+  flex: 1;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+.level-distance {
+  font-size: 0.85rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Position Info */
+.position-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: var(--bs-light);
+  border-radius: 8px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: var(--bs-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Actions */
+.position-actions {
+  margin-top: 1rem;
+}
+
+.position-actions .btn {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ===========================
+   VISUAL PROGRESS BAR
+   =========================== */
+
+.position-visual-progress {
+  position: relative;
+  height: 60px;
+  margin: 0.5rem 0;
+}
+
+.position-visual-progress.compact {
+  height: 40px;
+}
+
+.progress-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: var(--bs-gray-300);
+  border-radius: 4px;
+  transform: translateY(-50%);
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.progress-fill-success {
+  background: linear-gradient(90deg, var(--bs-success), var(--bs-success-light, #28a745));
+}
+
+.progress-fill-danger {
+  background: linear-gradient(90deg, var(--bs-danger), var(--bs-danger-light, #dc3545));
+}
+
+.progress-fill-warning {
+  background: linear-gradient(90deg, var(--bs-warning), var(--bs-warning-light, #ffc107));
+}
+
+.progress-risk-zone {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(220, 53, 69, 0.1),
+    rgba(220, 53, 69, 0.1) 10px,
+    rgba(220, 53, 69, 0.2) 10px,
+    rgba(220, 53, 69, 0.2) 20px
+  );
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+/* Markers */
+.progress-marker {
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.marker-line {
+  width: 3px;
+  height: 40px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
+.position-visual-progress.compact .marker-line {
+  height: 30px;
+}
+
+.marker-danger .marker-line {
+  background: var(--bs-danger);
+}
+
+.marker-info .marker-line {
+  background: var(--bs-info);
+}
+
+.marker-success .marker-line {
+  background: var(--bs-success);
+}
+
+.marker-warning .marker-line {
+  background: var(--bs-warning);
+}
+
+.marker-label {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.marker-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--bs-dark);
+}
+
+.marker-value {
+  font-size: 0.7rem;
+  color: var(--bs-secondary);
+  font-family: 'Courier New', monospace;
+}
+
+.progress-percentage {
+  position: absolute;
+  top: -8px;
+  right: 0;
+}
+
+/* ===========================
+   COMPACT CARD
+   =========================== */
+
+.position-card-compact {
+  padding: 1rem;
+  background: var(--bs-white);
+  border: 1px solid var(--bs-gray-300);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.position-card-compact:hover {
+  border-color: var(--bs-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.compact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.compact-symbol {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.compact-pnl {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ===========================
+   DARK THEME SUPPORT
+   =========================== */
+
+[data-bs-theme="dark"] .position-card {
+  background: var(--bs-gray-900);
+  border-color: var(--bs-gray-700);
+}
+
+[data-bs-theme="dark"] .position-header {
+  border-bottom-color: var(--bs-gray-700);
+}
+
+[data-bs-theme="dark"] .position-progress-section,
+[data-bs-theme="dark"] .position-levels,
+[data-bs-theme="dark"] .position-info {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] .progress-track {
+  background: var(--bs-gray-700);
+}
+
+[data-bs-theme="dark"] .position-card-compact {
+  background: var(--bs-gray-900);
+  border-color: var(--bs-gray-700);
+}
+
+[data-bs-theme="dark"] .position-card-compact:hover {
+  border-color: var(--bs-primary);
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 768px) {
+  .position-card {
+    margin-bottom: 0.75rem;
+  }
+
+  .position-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .position-pnl {
+    text-align: left;
+    width: 100%;
+  }
+
+  .pnl-value {
+    font-size: 1.25rem;
+  }
+
+  .position-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .position-actions .btn-group {
+    flex-direction: column;
+  }
+
+  .position-actions .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .marker-label {
+    display: none;
+  }
+
+  .position-visual-progress {
+    height: 50px;
+  }
+}
+
+@media (max-width: 576px) {
+  .position-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.progress-fill {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes slideInCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.position-card {
+  animation: slideInCard 0.3s ease-out;
+}

@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "breakout-bot"
+version = "0.1.0"
+description = "Sophisticated algorithmic trading system for cryptocurrency range breakout trading"
+authors = [{name = "Trading Team", email = "info@example.com"}]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "ccxt>=4.3.0",
+    "pydantic>=2.0.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "pandas-ta>=0.3.14b",
+    "asyncio-mqtt>=0.14.0",
+    "aiofiles>=23.0.0",
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "python-dotenv>=1.0.0",
+    "loguru>=0.7.0",
+    "websockets>=11.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.11.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
+]
+
+[project.scripts]
+breakout-bot = "breakout_bot.cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["breakout_bot*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
